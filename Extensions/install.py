@@ -17,63 +17,54 @@
 #
 # $Id$
 
+
+
+
 from Products.CPSInstaller.CPSInstaller import CPSInstaller
 
+class ProductInstaller(CPSInstaller):
+    product_name = 'CPSLocalFS'
+
+    SKINS = {'cps_localfs': 'Products/CPSLocalFS/skins/cps_localfs'}
+
+
+    def install(self):
+        self.log("Starting CPSLocalFS install.")     
+        
+        # Portal Workflow
+        self.allowContentTypes('CPSLocalFS', ('Workspace', 'Section'))
+        ws_chains = {'CPSLocalFS': 'workspace_content_wf',}
+        se_chains = {'CPSLocalFS': 'workspace_content_wf',}
+        self.verifyLocalWorkflowChains(self.portal['workspaces'],
+                                        ws_chains)
+        self.verifyLocalWorkflowChains(self.portal['sections'],
+                                        se_chains)
+        
+        # Portal Types
+        lfs_types = self.portal.getCPSLocalFSDocumentTypes()
+        self.verifyFlexibleTypes(lfs_types)
+        self.log(str(lfs_types))
+
+        # Portal Schemas
+        lfs_schemas = self.portal.getCPSLocalFSDocumentSchemas()
+        self.verifySchemas(lfs_schemas)
+        self.log(str(lfs_schemas))
+
+        # Portal Layouts
+        lfs_layouts = self.portal.getCPSLocalFSDocumentLayouts()
+        self.verifyLayouts(lfs_layouts)
+        self.log(str(lfs_layouts))
+      
+        # Portal Skins
+        self.verifySkins(self.SKINS)
+
+        self.log("End of CPSLocalFS install.")
+        self.finalize()
 
 def install(self):
-    """
-    CSPLocalFS Starting Point !
-    """
-
-    # CREATE THE INSTALLER
-    installer = CPSInstaller(self, 'CPSLocalFS')
-    installer.log("Starting CPSLocalFS Install")
-
-    # PORTAL TYPES
-    installer.allowContentTypes('CPSLocalFS', ('Workspace', 'Section'))
-  ##  ptypes = {
-##        'CPSLocalFS' : {
-##              'allowed_content_types': (),
-##              'typeinfo_name': 'CPSLocalFS: CPSLocalFS',
-##              'add_meta_type': 'Factory-based Type Information',
-##        },
-##    }
-##    installer.verifyContentTypes(ptypes)
-
-    #   WORKFLOW ASSOCIATIONS
-    ws_chains = {'CPSLocalFS': 'workspace_content_wf',}
-    se_chains = {'CPSLocalFS': 'workspace_content_wf',}
-    installer.verifyLocalWorkflowChains(installer.portal['workspaces'],
-                                        ws_chains)
-    installer.verifyLocalWorkflowChains(installer.portal['sections'],
-                                        se_chains)
-
-    # SKINS
-    skins = {'cps_localfs': 'Products/CPSLocalFS/skins/cps_localfs'}
-    installer.verifySkins(skins)
-
-
-##    # Action
-##    #############################################
-##    installer.verifyAction('portal_actions',
-##            id='status_history',
-##            name='action_status_history',
-##            action='string: ${object/absolute_url}/content_status_history',
-##            # XXX: this is as messy as what is done in cpsinstall
-##           # condition="python:getattr(object, 'portal_type', None) not in "
-##            #          "('Section', 'Workspace', 'Portal', 'Calendar', 'Event', "
-##             #         "'CPSForum', 'CPSChat',)",
-##            permission='View',
-##            category='workflow')
-
-##    ##############################################
-##    # i18n support
-##    ##############################################
-##    installer.verifyMessageCatalog('cpschat', 'CPSChat messages')
-##    installer.setupTranslations(message_catalog='cpschat')
-
-    # Finished!
-    installer.finalize()
-    installer.log("End of CPSLocalFS install")
+    installer = ProductInstaller(self)
+    installer.install()
     return installer.logResult()
+
+
 
