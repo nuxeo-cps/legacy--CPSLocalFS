@@ -1,7 +1,7 @@
 
 <metal:html tal:define="
              parent_title python:here.aq_parent.title_or_id();">
-<metal:body use-macro="here/content_lib/macros/master">
+<metal:body use-macro="here/content_lib_master/macros/master">
 <metal:header metal:fill-slot="header">
 
 <tal:block condition="python:checkPerm('List folder contents',
