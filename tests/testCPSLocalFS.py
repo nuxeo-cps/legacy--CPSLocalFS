@@ -17,37 +17,23 @@ class TestCPSLocalFS(CPSLocalFSTestCase.CPSLocalFSTestCase):
     def beforeTearDown(self):
         self.logout()
 
-    def testVersionLocalfsOK(self):
-        required_version ="LocalFS-1-2-andreas"
-        version_path = str(ZOPE_HOME) + "/Products/LocalFS/version.txt"
-        
-        if exists(version_path):
-            version_file= open(version_path)
-            installed_version = version_file.readline()
-            version_file.close()
-            self.assert_(required_version==installed_version)
-        else:
-            self.assert_(0)
-            
     def testAccessCPSLocalfsOK(self):
         """ Make sure a file can be acceded """
-        path = ZOPE_HOME + "/Products/CPSLocalFS/doc"
+        path = ZOPE_HOME + "/Products/CPSLocalFS/tests"
         title = "Test CPSLocalFS OK"
-        kw = {}
-        datamodel = {}
-        datamodel['basepath'] = path
-        datamodel['Title'] = title
-        kw['datamodel'] = datamodel
-        cpslocalfs = CPSLocalFS("sqfmdfj",**kw)
+        datamodel = {'basepath': path, 'Title': title}
+        cpslocalfs = CPSLocalFS("idTestCPSLocalFS", datamodel=datamodel)
         files = cpslocalfs.fileValues()
         # Check if file 'install.txt' can be acceded
-        found = 0
-        for file in files:
-            if file.url == "install.txt":
-                found = 1
-        self.assert_(found)
+        self.assert_("tests.txt" in [file.url for file in files])
+        for file in files :
+            if file.url == "tests.txt":
+                self.assertEqual(file.id, "tests.txt")
+                self.assertEqual(file.icon, "misc_/LocalFS/text.gif")
+                self.assertEqual(file.type, "text/plain")
+        local_file = cpslocalfs["tests.txt"]
+        self.assertEqual(local_file.data[:9],"Test file")
         
-
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(TestCPSLocalFS))
