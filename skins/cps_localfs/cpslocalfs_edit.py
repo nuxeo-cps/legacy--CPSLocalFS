@@ -24,22 +24,22 @@ try:
 
 except OSError:
     fs.editProperties(bck_title, bck_path, bck_description)
-    REQUEST.set('portal_status_message','stm_cpslocalfs_unknown_basepath_message')
+    REQUEST.set('portal_status_message','psm_cpslocalfs_unknown_basepath_message')
     return context.cpslocalfs_edit_form(context, REQUEST)
 
 except TypeError:
     fs.editProperties(bck_title, bck_path, bck_description)
-    REQUEST.set('portal_status_message','stm_cpslocalfs_insufficients_rights_message')
+    REQUEST.set('portal_status_message','psm_cpslocalfs_insufficients_rights_message')
     return context.cpslocalfs_edit_form(context, REQUEST)
 
 except AttributeError:
     fs.editProperties(bck_title, bck_path, bck_description)
-    REQUEST.set('portal_status_message','stm_cpslocalfs_invalid_content_in_folder_message')
+    REQUEST.set('portal_status_message','psm_cpslocalfs_invalid_content_in_folder_message')
     return context.cpslocalfs_edit_form(context, REQUEST)
 
 except NameError:
     fs.editProperties(bck_title, bck_path, bck_description)
-    REQUEST.set('portal_status_message','stm_cpslocalfs_invalid_basepath_message')
+    REQUEST.set('portal_status_message','psm_cpslocalfs_invalid_basepath_message')
     return context.cpslocalfs_edit_form(context, REQUEST)
 
 
