@@ -6,10 +6,10 @@
    Downloads/view), therefore you need to untar it in the 'Products/LocalFS' 
    folder of your Zope instance. 
 
-3. Only pre-authorized paths can be accessed by CPSLocalFS users. Administra
+i3. Only pre-authorized paths can be accessed by CPSLocalFS users. Administra
    -tors allow access to some folders by adding their paths to the
-   'localfs_dirs.txt' which must be added to the ZOPE_HOME/var folder of your 
-   Zope instance.
+   'localfs_dirs.txt' which must be added to the CLIENT_HOME folder of
+   your Zope instance.
    Eg: '/tmp/sharedcontent/' will allow CPSLocalFS to access the content of 
    'sharedcontent' and its subfolders.
 
