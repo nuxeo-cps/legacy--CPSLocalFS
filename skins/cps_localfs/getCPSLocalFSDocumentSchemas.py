@@ -5,7 +5,7 @@
 # Image SCHEMA
 ########################################################
 cpslocalfs_schema = {
-    'lfsbasepath': {
+    'basepath': {
         'type': 'CPS String Field',
         'data': {
                 'default': '',

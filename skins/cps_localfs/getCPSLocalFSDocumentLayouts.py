@@ -5,11 +5,11 @@
 
 cpslocalfs_layout = {
     'widgets': {
-        'lfsbasepath': {
+        'basepath': {
             'type': 'Path Widget',
             'data': {
     
-                'fields': ['lfsbasepath'],
+                'fields': ['basepath'],
                 'is_i18n': 1,
                 'is_required': 1,
                 'label_edit': 'label_basepath',
@@ -22,7 +22,7 @@ cpslocalfs_layout = {
     'layout': {
         'style_prefix': 'layout_default_',
         'ncols': 1,
-        'rows': [[{'widget_id': 'lfsbasepath'},],],
+        'rows': [[{'widget_id': 'basepath'},],],
         },
     }
 
