@@ -1,12 +1,14 @@
 # translation of en.po to 
+# translation of en.po to
 # Gettext Message File for default.
 # Your Name <your@email>, Year
+# sastier, 2004.
 # sastier, 2004.
 msgid ""
 msgstr ""
 "Project-Id-Version: en\n"
-"POT-Creation-Date: 2004-04-05 14:28default\n"
-"PO-Revision-Date: 2004-04-05 14:50+0200\n"
+"POT-Creation-Date: 2004-04-05 16:41default\n"
+"PO-Revision-Date: 2004-04-05 16:28+0200\n"
 "Last-Translator: sastier\n"
 "Language-Team:  <C@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -28,7 +30,7 @@ msgstr "Validate"
 #.         ${up_id (tal content="parent_title")}</span>
 #: from ../skins/cps_localfs/cpslocalfs_folder_contents.pt
 msgid "description_up_to ${up_id}"
-msgstr "Up"
+msgstr "Up ${up_id}"
 
 #.   <th align="right">Host</th>
 #: from ../skins/cps_localfs/cpslocalfs_edit_form.pt
@@ -45,16 +47,20 @@ msgstr "Description"
 msgid "label_title"
 msgstr "Title"
 
-msgid "stm_cpslocalfs_unknown_basepath_message"
+#, fuzzy
+msgid "psm_cpslocalfs_unknown_basepath_message"
 msgstr "Unknown basepath."
 
-msgid "stm_cpslocalfs_insufficients_rights_message"
+#, fuzzy
+msgid "psm_cpslocalfs_insufficients_rights_message"
 msgstr "Insufficients rights on basepath."
 
-msgid "stm_cpslocalfs_invalid_content_in_folder_message"
+#, fuzzy
+msgid "psm_cpslocalfs_invalid_content_in_folder_message"
 msgstr "Invalid fields in folder."
 
-msgid "stm_cpslocalfs_invalid_basepath_message"
+#, fuzzy
+msgid "psm_cpslocalfs_invalid_basepath_message"
 msgstr "Invalid basepath."
 
 msgid "portal_type_CPSLocalFS_title"
@@ -65,4 +71,3 @@ msgstr "View on a folder content"
 
 msgid "blank"
 msgstr ""
-
