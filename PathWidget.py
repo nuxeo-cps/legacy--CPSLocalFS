@@ -36,8 +36,16 @@ class PathWidget(CPSStringWidget):
         field_id = self.fields[0]
         a_path = datastructure.get(widget_id,'')
 
-        # we check if the provided path has been
-        # authorized.
+        # Checks if the configuration file is accessible.
+        f_path = str(CLIENT_HOME)+"/localfs_dirs.txt"
+        if not exists(f_path):
+            LOG("PathWidget: ", DEBUG,
+                "missing localfs_dirs.txt configuration file")
+            datastructure.setError(widget_id,\
+                "psm_cpslocalfs_missing_config_file_message")
+            return 0
+        
+        # checks if the provided path has been authorized.
         f = open('localfs_dirs.txt')
         authorized = 0
         while 1:
