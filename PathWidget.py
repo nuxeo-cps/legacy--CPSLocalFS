@@ -58,7 +58,7 @@ class PathWidget(CPSStringWidget):
             return 0
         
         # Checks if the configuration file is accessible.
-        f_path = CLIENT_HOME + "/localfs_dirs.txt"
+        f_path = INSTANCE_HOME + "/var/localfs_dirs.txt"
         if not exists(f_path):
             LOG("PathWidget: ", ERROR,
                 "missing localfs_dirs.txt configuration file")
@@ -67,7 +67,7 @@ class PathWidget(CPSStringWidget):
             return 0
         
         # checks if the provided path has been authorized.
-        f = open('localfs_dirs.txt')
+        f = open(f_path)
         authorized = 0
         for line in f.readlines():
             if line == "":
