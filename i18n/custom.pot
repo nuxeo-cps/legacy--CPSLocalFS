@@ -17,16 +17,16 @@ msgstr ""
 "Domain: default\n"
 
 
-msgid "stm_cpslocalfs_unknown_basepath_message"
+msgid "psm_cpslocalfs_unknown_basepath_message"
 msgstr ""
 
-msgid "stm_cpslocalfs_insufficients_rights_message"
+msgid "psm_cpslocalfs_insufficients_rights_message"
 msgstr ""
 
-msgid "stm_cpslocalfs_invalid_content_in_folder_message"
+msgid "psm_cpslocalfs_invalid_content_in_folder_message"
 msgstr ""
 
-msgid "stm_cpslocalfs_invalid_basepath_message"
+msgid "psm_cpslocalfs_invalid_basepath_message"
 msgstr ""
 
 msgid "portal_type_CPSLocalFS_title"
