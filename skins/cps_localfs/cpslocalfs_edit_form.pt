@@ -3,42 +3,60 @@
       i18n:domain="cpslocalfs">
 
 <metal:block fill-slot="header" />
-
 <metal:block fill-slot="main">
 
 <form action="cpslocalfs_edit" method="post">
-  <table>
-  <tr>
-    <th align="right" i18n:translate="label_title">Title</th>
-      <td>
-        <input type="text" name="title"
-               tal:attributes="value here/getTitle"/>
 
-      </td>
-    </tr>
-    <tr>
-      <th align="right" i18n:translate="label_basepath">Host</th>
-      <td>
-        <input type="text" name="path"
-               tal:attributes="value here/getPath"/>
-      </td>
-    </tr>
-    <tr>
-      <th align="right" i18n:translate="label_description">Description</th>
-      <td>
-        <textarea cols="60" rows="8" name="description"
-         tal:content="python:here.getDescription()">dummy
-        </textarea>
-      </td>
-    </tr>
-    <tr>
-      <th></th>
-      <td>
-        <input type="submit" value="button_change"
-               i18n:attributes="value" />
-      </td>
-    </tr>
-  </table>
+<table width="100%" cellpadding="2" cellspacing="2" border="0" summary="form layout">
+  <tr valign="top">
+    <td colspan="1">
+      <div class="row">
+        <div class="label required">
+          <span i18n:translate="label_title">Title</span>:
+        </div>  
+        <div class="field">
+          <input type="text" name="title" size="72" maxlength="100"
+              tal:attributes="value here/getTitle" />
+        </div>
+      </div>
+    </td>
+  </tr>
+  <tr valign="top">
+    <td colspan="1">
+      <div class="row">
+        <div>
+          <span i18n:translate="label_description">Description</span>:
+        </div>
+        <div class="field">
+          <textarea cols="72" rows="8" name="description"
+              tal:content="python:here.getDescription()">dummy
+          </textarea>
+          <br />
+        </div>
+      </div>    
+    </td>
+  </tr>
+  <tr valign="top">
+    <td colspan="1">
+      <div class="row">
+        <div class="label required">
+          <span i18n:translate="label_basepath">Host</span>:
+        </div>
+        <div class="field"> 
+          <input type="text" name="path" size="72"
+              tal:attributes="value here/getPath" />
+        </div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <input type="submit" value="button_change"
+          i18n:attributes="value" />
+    </td>
+  </tr>
+</table>
+
 </form>
 </metal:block>
 </html>
