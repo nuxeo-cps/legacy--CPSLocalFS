@@ -1,0 +1,10 @@
+<html metal:use-macro="here/main_template/macros/master"
+      i18n:domain="cpslocalfs">
+
+<metal:block fill-slot="header" />
+
+<B> TEST </B>
+
+<metal:block fill-slot="main">
+</metal:block>
+</html>
