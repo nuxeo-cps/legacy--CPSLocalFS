@@ -6,6 +6,9 @@ __version__='$Revision$'
 
 from Products.CMFCore.CMFCorePermissions import View, ModifyPortalContent
 from Products.CPSCore.CPSBase import CPSBase_adder
+from Products.CPSDocument.CPSDocument import CPSDocument as BaseDocument
+
+
 from Products.CMFCore import CMFCorePermissions
 from Products.LocalFS.LocalFS import LocalFS
 from Products.CPSDefault.Folder import Folder
@@ -20,7 +23,7 @@ factory_type_information = ({
       'title': 'portal_type_CPSLocalFS_title',
       'icon': 'localfs_icon.gif',
       'product': 'CPSLocalFS',
-      'meta_type': 'CPSLocalFS',
+      'meta_type': 'CPS Document',
       'factory': 'addCPSLocalFS',
       'filter_content_types': 0,
       'allowed_content_types': (),
@@ -42,18 +45,20 @@ factory_type_information = ({
       },
   )
 
-class CPSLocalFS(LocalFS, Folder):
+class CPSLocalFS(LocalFS, BaseDocument):
     """Object that creates Zope objects from files in the
        local file system."""
-    
+   
     meta_type = 'CPSLocalFS'
     portal_type = meta_type
     # _type_map = [] # TODO
     _properties = LocalFS._properties
 
+    
     security = ClassSecurityInfo()
 
     def __init__(self, id, **kw):
+        BaseDocument.__init__(self, id, **kw)
         self.datamodel = kw.get('datamodel')
         self.lfs_title = self.datamodel['Title']
         self.lfs_basepath = self.datamodel['Basepath']
@@ -63,7 +68,7 @@ class CPSLocalFS(LocalFS, Folder):
 ##        LOG("*__init__* descrip ==>", INFO,self.lfs_description)
 ##        LOG("*__init__* basepath ==>", INFO,self.lfs_basepath)
         LocalFS.__init__(self, self.lfs_title, self.lfs_basepath, None, None)
-        Folder.__init__(self, id, **kw)
+    #    Folder.__init__(self, id, **kw)
 
      
     security.declareProtected(ModifyPortalContent, 'edit')
@@ -93,7 +98,7 @@ class CPSLocalFS(LocalFS, Folder):
             return type.icon_path
        
 
-InitializeClass(Folder)
+InitializeClass(CPSLocalFS)
 
 def addCPSLocalFS(container, id, **kw):
     """Add a CPS local file system object to a folder
