@@ -80,7 +80,7 @@
                                      base_url=base_url, title='%s, id:%s' % 
 					(item_meta_type, item_id))" />
         <a href="" tal:attributes=
-               "href string:${context_url}/${item_id}/">
+               "href string:${context_url}/${item_id}">
           <b><span tal:replace="item_id"> ID </span></b>
           &nbsp;<span tal:replace="python:item.size/1024">size</span>&nbsp;Ko.
           <br/>
