@@ -1,23 +1,12 @@
 Requires:
 ~~~~~~~~~
-- Updating an old version of this product may not erase the old workflow
-  configuration, so make sure that:
-  - /cps/sections/.cps_workflow_configuration assigns to the portal type
-    "CPSLocalFS" the following workflow: section_folder_wf
-  - /cps/workspaces/.cps_workflow_configuration assigns to the portal type
-    "CPSLocalFS" the following workflow: workspace_folder_wf
-- CPSLocalFS objects previously created will have to be recreated, because
-  they may not follow the right workflow.
+-
 New features:
 ~~~~~~~~~~~~~
 -
 Bug fixes:
 ~~~~~~~~~~
-- Set permission 'View' instead of 'ModifyPortalContent' on 'isAccessible()'
-  method because workspace readers could not have access to a CPSLocalFS
-  object in a workspace.
-- The installer did not set the right workflow on CPSLocalFS objects set in
-  sections.
+-
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
