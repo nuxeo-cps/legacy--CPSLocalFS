@@ -1,14 +1,18 @@
 from Products.CPSSchemas.Widget import CPSWidget
-from Products.CPSSchemas.BasicWidgets import CPSStringWidget, CPSStringWidgetType
+from Products.CPSSchemas.BasicWidgets import CPSStringWidget,\
+     CPSStringWidgetType
 from Globals import InitializeClass
 from Products.CPSSchemas.WidgetTypesTool import WidgetTypeRegistry
 from Products.CPSSchemas.BasicWidgets import _isinstance, renderHtmlTag
 from Products.LocalFS.LocalFS import LocalFS
 from Products.CPSLocalFS.CPSLocalFS import CPSLocalFS
 from Globals import InitializeClass
-#from zLOG import LOG, DEBUG
+from zLOG import LOG, DEBUG
 from os.path import exists, isdir
 from os import access, W_OK, listdir
+
+import sys
+import traceback
 
 
 class PathWidget(CPSStringWidget):
@@ -34,34 +38,49 @@ class PathWidget(CPSStringWidget):
         datamodel = datastructure.getDataModel()
         field_id = self.fields[0]
         a_path = datastructure.get(widget_id,'')
-        
+
+        # we check if the provided path has been
+        # authorized.
+        f = open('localfs_dirs.txt')
+        authorized = 0
+        while 1:
+            l = f.readline()[:-1]
+            if l == "": break
+            LOG("path: ", DEBUG,l)
+            if a_path.startswith(l):
+                authorized = 1
+        f.close()
+        if not authorized:
+            LOG("PathWidget ", DEBUG,"\n Provided path '"+a_path+ \
+               "'is unauthorized, must match a prefix in var/localfs_dirs.txt")
+            datastructure.setError(widget_id,\
+                "psm_cpslocalfs_unauthorized_basepath_message")
+            return 0
+          
+        # we consider the path to be valid
         ok = 1
         if not exists(a_path):
             #LOG("PathWidget: ", DEBUG, "Path doesn't exist")
-            datastructure.setError(widget_id,"psm_cpslocalfs_invalid_basepath_message")
+            datastructure.setError(widget_id,\
+                "psm_cpslocalfs_invalid_basepath_message")
             ok = 0
         else:
             if not isdir(a_path):
                 #LOG("PathWidget: ", DEBUG, "Path is not a directory")
-                datastructure.setError(widget_id,"psm_cpslocalfs_unknown_basepath_message")
+                datastructure.setError(widget_id,\
+                    "psm_cpslocalfs_unknown_basepath_message")
                 ok = 0
             else:
+                LOG("PathWidget Field_id : ", DEBUG, field_id)
+                datamodel.set(field_id,a_path)
                 if not access(a_path,W_OK):
                     #LOG("PathWidget: ", DEBUG, "Insufficient Rights")
-                    datastructure.setError(widget_id,"psm_cpslocalfs_insufficients_rights_message")
+                    datastructure.setError(widget_id,\
+                        "psm_cpslocalfs_insufficients_rights_message")
                     ok = 0
-                else:
-                    # Check if the folder contains won't crash LocalFS.
-                    try:
-                        lfs = LocalFS("tmplocalfsforcpslocalfs", a_path, None, None)
-                        lfs_content = lfs.getFolderContents()
-                    except  TypeError:
-                        datastructure.setError(widget_id,"psm_cpslocalfs_insufficients_rights_message")
-                        ok = 0
-                    except  AttributeError:
-                        datastructure.setError(widget_id,"psm_cpslocalfs_invalid_content_in_folder_message")
-                        ok = 0       
-                    datamodel.set(field_id,a_path)
+
+               
+                   
         return ok
 
     
