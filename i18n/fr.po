@@ -2,12 +2,8 @@
 # translation of fr.po to
 # translation of fr.po to
 # translation of fr.po to
-# translation of fr.po to
 # Gettext Message File for default.
 # Your Name <your@email>, Year
-# sastier, 2004.
-# sastier, 2004.
-# sastier, 2004.
 # sastier, 2004.
 # sastier, 2004.
 # sastier, 2004.
@@ -15,8 +11,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: fr\n"
-"POT-Creation-Date: 2004-04-02 18:38default\n"
-"PO-Revision-Date: 2004-04-02 18:40+0200\n"
+"POT-Creation-Date: 2004-04-05 14:28default\n"
+"PO-Revision-Date: 2004-04-05 14:53+0200\n"
 "Last-Translator: sastier\n"
 "Language-Team:  <C@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -32,29 +28,23 @@ msgstr ""
 #.   <input value="button_change" type="submit" />
 #: from ../skins/cps_localfs/cpslocalfs_edit_form.pt
 msgid "button_change"
-msgstr "Modifier"
-
-#.   <span>description_up_to</span>
-#: from ../skins/cps_localfs/cpslocalfs_folder_contents.pt
-msgid "description_up_to"
-msgstr "Vers"
+msgstr "Enregistrer"
 
 #.   <span>description_up_to
-#.         <b content="parent_title">
-#.         Up ID</b></span>
+#.         ${up_id (tal content="parent_title")}</span>
 #: from ../skins/cps_localfs/cpslocalfs_folder_contents.pt
-msgid "description_up_to <b content=\"parent_title\"> Up ID</b>"
-msgstr ""
+msgid "description_up_to ${up_id}"
+msgstr "Vers"
 
 #.   <th align="right">Host</th>
 #: from ../skins/cps_localfs/cpslocalfs_edit_form.pt
 msgid "label_basepath"
-msgstr "Adresse du répertoire"
+msgstr "Chemin"
 
 #.   <th align="right">Description</th>
 #: from ../skins/cps_localfs/cpslocalfs_edit_form.pt
 msgid "label_description"
-msgstr "description"
+msgstr "Description"
 
 #.   <th align="right">Title</th>
 #: from ../skins/cps_localfs/cpslocalfs_edit_form.pt
@@ -62,17 +52,23 @@ msgid "label_title"
 msgstr "Titre"
 
 msgid "stm_cpslocalfs_unknown_basepath_message"
-msgstr "Ce répertoire n'existe pas."
+msgstr "Ce répertoire n'éxiste pas."
 
 msgid "stm_cpslocalfs_insufficients_rights_message"
-msgstr "Les droits sur ce répertoires sont insuffisants."
+msgstr "Les droits du processus Zope sont insuffisants sur ce répertoire."
 
 msgid "stm_cpslocalfs_invalid_content_in_folder_message"
-msgstr "Ce répertoire contient des fichiers invalides."
+msgstr "Le répertoire contient des fichiers non valides."
 
 msgid "stm_cpslocalfs_invalid_basepath_message"
-msgstr "L'adresse fournie est invalide."
+msgstr "L'adresse du répertoire est invalide."
 
 msgid "portal_type_CPSLocalFS_title"
-msgstr "Répertoire système."
+msgstr "Répertoire sur le serveur"
+
+msgid "portal_type_CPSLocalFS_description"
+msgstr "Vue d'un répertoire"
+
+msgid "blank"
+msgstr ""
 

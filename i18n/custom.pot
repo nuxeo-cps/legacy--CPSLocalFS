@@ -31,3 +31,9 @@ msgstr ""
 
 msgid "portal_type_CPSLocalFS_title"
 msgstr ""
+
+msgid "portal_type_CPSLocalFS_description"
+msgstr ""
+
+msgid "blank"
+msgstr ""
