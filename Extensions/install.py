@@ -135,9 +135,9 @@ class ProductInstaller(CPSInstaller):
         """ Remove action_status_history, should not be done in 
         CPSLocalFS but in the product using it.
         """
-        wftool = getToolByName(self.portal,'portal_actions')
+        actiontool = getToolByName(self.portal, 'portal_actions')
         self.log("les actions du portail : ")
-        for action in wftool._actions:
+        for action in actiontool._actions:
             if action.Title() == 'action_status_history':
                 action.condition = Expression("python:getattr(object,\
                 'portal_type', None) not in ('CPSLocalFS','Section',\
