@@ -27,9 +27,9 @@ cpslocalfs_type = {
                   'name': 'action_view',
                   'action': 'cpslocalfs_folder_contents',
                   'permissions': ('View',)},
-                  {'id': 'edit',
+                {'id': 'edit',
                    'name': 'action_modify',
-                   'action': 'cpslocalfs_edit_form',
+                   'action': 'cpsdocument_edit_form',        
                    'permissions': ('ModifyPortalContent',),},                
             ),
 }
