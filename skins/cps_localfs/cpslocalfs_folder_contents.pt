@@ -7,6 +7,7 @@
 <metal:body use-macro="here/content_lib/macros/master">
 
 <metal:header metal:fill-slot="header">
+
 <tal:block condition="python:checkPerm('List folder contents',
                                here, 'aq_parent')">
   <tal:block condition="python:here.aq_parent.portal_type != 'CPSLocalFS'">  
@@ -43,8 +44,8 @@
 <a href="" accesskey="N"
    style="display:none"
    tal:attributes="href string:${context_url}/folder_factories"></a>
-</metal:header>
 
+</metal:header>
 
 <metal:main fill-slot="main"
      tal:define="list_here python:checkPerm('List folder contents', here);">
@@ -55,12 +56,15 @@
 </div>
 
 
-<tal:block define=" doc here/getContent;
+
+<tal:block define=" 
+                    doc here/getContent;
+                    dummy here/updateLocalFSAttributs;
                     items python:doc.getFolderContents(displayed=displayed);
                     context_url context_url|here/getContextUrl;">
+
+   
   <tal:block repeat="item items"> 
-
-
     <tal:block define="item_id python:item.getId();
                        item_meta_type python:item.meta_type;
 		       item_content_type python:item.content_type; ">
