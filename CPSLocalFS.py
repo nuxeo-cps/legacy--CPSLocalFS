@@ -24,14 +24,10 @@ factory_type_information = ({
       'allowed_content_types': (),
       'immediate_view':'cpslocalfs_edit_form',
       'actions': (
-                  {'id': 'edit',
-                   'name': 'action_edit',
-                   'action': 'cpslocalfs_folder_contents',
-                   'permissions': (ModifyPortalContent,),
-                   },
-                  {'id': 'contents',
-                   'name': 'action_folder_contents',
-                   'action': 'cpslocalfs_folder_contents',
+               
+                  {'id': 'modify',
+                   'name': 'action_modify',
+                   'action': 'cpslocalfs_edit_form',
                    'permissions': (ModifyPortalContent,),
                    },
             ),
@@ -61,7 +57,8 @@ class CPSLocalFS(LocalFS, Folder):
         
     security.declareProtected(ModifyPortalContent, 'editProperties')
     def editProperties(self, title='', description='', basepath=''):
-        """ Edit chat object properties."""
+        """ Edit CPSLocalFS object properties."""
+        self.description = description
         self.manage_changeProperties(title=title, description=description,\
                                      basepath=basepath)
         
