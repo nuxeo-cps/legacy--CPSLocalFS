@@ -31,14 +31,14 @@ def install(self):
 
     # PORTAL TYPES
     installer.allowContentTypes('CPSLocalFS', ('Workspace', 'Section'))
-    ptypes = {
-        'CPSLocalFS' : {
-              'allowed_content_types': (),
-              'typeinfo_name': 'CPSLocalFS: CPSLocalFS',
-              'add_meta_type': 'Factory-based Type Information',
-        },
-    }
-    installer.verifyContentTypes(ptypes)
+  ##  ptypes = {
+##        'CPSLocalFS' : {
+##              'allowed_content_types': (),
+##              'typeinfo_name': 'CPSLocalFS: CPSLocalFS',
+##              'add_meta_type': 'Factory-based Type Information',
+##        },
+##    }
+##    installer.verifyContentTypes(ptypes)
 
     #   WORKFLOW ASSOCIATIONS
     ws_chains = {'CPSLocalFS': 'workspace_content_wf',}
