@@ -50,11 +50,16 @@ class CPSLocalFS(LocalFS, Folder):
     _type_map = [] # TODO
     _properties = LocalFS._properties
 
+    security = ClassSecurityInfo()
+
+    XXX_default_path = '/home/sastier/tmp/'
+
     def __init__(self, id, **kw):                
         Folder.__init__(self, id, **kw)
-        LocalFS.__init__(self, id, '/home/sastier/tmp/', None, None)
+        LocalFS.__init__(self, id, XXX_default_path, None, None)
         LOG("*sas* ===> ", INFO, "CPSlocalFS : fin de __init__")
 
+    security.declareProtected(ModifyPortalContent, 'edit')
     def edit(self, *args, **kw):
         print args
         print kw
