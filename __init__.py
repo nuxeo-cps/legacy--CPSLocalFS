@@ -1,7 +1,6 @@
-__doc__="""CPS Local File System product initialization
+"""CPS Local File System product initialization
 
 $Id$"""
-__version__='$Revision$'[11:-2]
 
 
 from Products.CMFCore import utils
