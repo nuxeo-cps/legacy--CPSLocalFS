@@ -1,0 +1,19 @@
+#################################
+# This file is intended to be placed in your Zope instance
+# ZOPE_HOME/var folder. It features a list of the files you
+# want to allow access through CPSLocalFS.
+# The Zope process needs to have read and write access on
+# those files. Hence, if a file does not have sufficients
+# access rights, LocalFS will forbid its access to your users. 
+# To avoid things to turn hurry for your users, best practice
+# would be not to leave any file with unsufficients rights 
+# in those folders.
+#
+# Any line starting with a '#' is commented out.
+# 
+# WARNING : Removing a path from this list does not remove
+# previous CPSLocalFS instancied with this path.
+################################
+/tmp
+#/home/sastier/tmp
+/home/zopes
