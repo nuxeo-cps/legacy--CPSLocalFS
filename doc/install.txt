@@ -1,0 +1,27 @@
+
+
+1. CPSLocalFS use the product LocalFS-1.2-andreas (http://www.easyleading.org/
+   Downloads/view), therefore you need to untar it in the 'Products' folder 
+   of your Zope instance. 
+
+2. Only pre-authorized paths can be accessed by CPSLocalFS users. Administra
+   -tors allow access to some folders by adding their paths to the
+   localfs_dirs.txt which must be added to the ZOPE_HOME/var folder of your 
+   Zope instance.
+   Eg: '/tmp/sharedcontent' will allow CPSLocalFS to access the content of 
+   'sharedcontent' and its subfolders.
+
+3. Install CPSLocalFS, do so by running its install script. For instance, from
+   the ZMI, add an External Method to your CPS site with the following parameters:
+
+       - id : CPSLocalFS Installer (or whatever)
+       - title: CPSLocalFS Installer (or whatever)
+       - Module Name: CPSLocalFS.install
+       - Funciton Name: install
+
+   Press save and run it by clicking on the 'test' tab of this external method.
+
+4. You are all set. 
+
+
+ 
