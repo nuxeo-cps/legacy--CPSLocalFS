@@ -3,12 +3,12 @@ from Products.CPSSchemas.BasicWidgets import CPSStringWidget,\
      CPSStringWidgetType
 from Globals import InitializeClass
 from Products.CPSSchemas.WidgetTypesTool import WidgetTypeRegistry
-from Products.CPSSchemas.BasicWidgets import _isinstance, renderHtmlTag
+from Products.CPSSchemas.BasicWidgets import renderHtmlTag
 from Products.LocalFS.LocalFS import LocalFS
 from Products.CPSLocalFS.CPSLocalFS import CPSLocalFS
 from os.path import exists, isdir
 from os import access, W_OK, listdir
-from zLOG import LOG, DEBUG, INFO
+from zLOG import LOG, ERROR
 
 
 class PathWidget(CPSStringWidget):
@@ -40,6 +40,12 @@ class PathWidget(CPSStringWidget):
         field_id = self.fields[0]
         path = datastructure.get(widget_id, '')
 
+        # provide path : '/home/monrep' must match
+        # the line '/home/monrep/' in the config file,
+        # so we add an extra '/' to path if needed.
+        if path[-1]!='/':
+            path+='/'
+
         # Make sure path doesn't feature any '..'
         if path.find("..") != -1:
             datastructure.setError(widget_id, 
@@ -47,9 +53,9 @@ class PathWidget(CPSStringWidget):
             return 0
         
         # Checks if the configuration file is accessible.
-        f_path = str(ZOPE_HOME) + "/var/localfs_dirs.txt"
+        f_path = ZOPE_HOME + "/var/localfs_dirs.txt"
         if not exists(f_path):
-            LOG("PathWidget: ", DEBUG,
+            LOG("PathWidget: ", ERROR,
                 "missing localfs_dirs.txt configuration file")
             datastructure.setError(widget_id, 
                 "psm_cpslocalfs_missing_config_file_message")
@@ -62,12 +68,17 @@ class PathWidget(CPSStringWidget):
             line = f.readline()[:-1]
             if line == "":
                 break
+            # allowing access to '/home/auser/content'
+            # must not allow access to '/home/auser/content1'
+       
             if not line.startswith('#'):
+                if line[-1]!='/':
+                    line+='/'
                 if path.startswith(line):
                     authorized = 1
         f.close()
         if not authorized:
-            LOG("PathWidget: ", DEBUG, "\n Provided path '" +path+ 
+            LOG("PathWidget: ", ERROR, "\n Provided path '" +path+ 
                "'is unauthorized, must match a prefix in var/localfs_dirs.txt")
             datastructure.setError(widget_id, 
                 "psm_cpslocalfs_unauthorized_basepath_message")
@@ -76,21 +87,20 @@ class PathWidget(CPSStringWidget):
         # we consider the path to be valid
         ok = 1
         if not exists(path):
-            LOG("PathWidget: ", DEBUG, "Path doesn't exist")
+            LOG("PathWidget: ", ERROR, "Path doesn't exist")
             datastructure.setError(widget_id, 
                 "psm_cpslocalfs_invalid_basepath_message")
             ok = 0
         else:
             if not isdir(path):
-                LOG("PathWidget: ", DEBUG, "Path is not a directory")
+                LOG("PathWidget: ", ERROR, "Path is not a directory")
                 datastructure.setError(widget_id, 
                     "psm_cpslocalfs_unknown_basepath_message")
                 ok = 0
             else:
-                LOG("PathWidget Field_id : ", DEBUG, field_id)
                 datamodel.set(field_id, path)
                 if not access(path, W_OK):
-                    LOG("PathWidget: ", DEBUG, "Insufficient Rights")
+                    LOG("PathWidget: ", ERROR, "Insufficient Rights")
                     datastructure.setError(widget_id, 
                         "psm_cpslocalfs_insufficients_rights_message")
                     ok = 0     
@@ -128,8 +138,5 @@ InitializeClass(PathWidgetType)
 
 
 
-#
 # Register widget types.
-#
-
 WidgetTypeRegistry.register(PathWidgetType,PathWidget)
