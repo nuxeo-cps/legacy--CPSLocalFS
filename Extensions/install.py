@@ -19,6 +19,7 @@
 
 from Products.CPSInstaller.CPSInstaller import CPSInstaller
 
+
 def install(self):
     """
     Starting point !
@@ -40,8 +41,8 @@ def install(self):
     installer.verifyContentTypes(ptypes)
 
     #   WORKFLOW ASSOCIATIONS
-    ws_chains = {'CPSLocalFS': 'workspace_folder_wf',}
-    se_chains = {'CPSLocalFS': 'section_folder_wf',}
+    ws_chains = {'CPSLocalFS': 'workspace_content_wf',}
+    se_chains = {'CPSLocalFS': 'workspace_content_wf',}
     installer.verifyLocalWorkflowChains(installer.portal['workspaces'],
                                         ws_chains)
     installer.verifyLocalWorkflowChains(installer.portal['sections'],
