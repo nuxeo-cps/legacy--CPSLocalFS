@@ -59,7 +59,7 @@ class ProductInstaller(CPSInstaller):
         
         # Test if CPSLocalFS has all it needs.
         if not self.testVersionLocalFS():
-            self.log("'LocalFS-1.2-andreas' not found")
+            self.log("LocalFS-1.2-andreas or LocalFS-1.3-andreas not found")
             self.log("CPSLocalFS install aborted")
             return 0
         
@@ -145,7 +145,7 @@ class ProductInstaller(CPSInstaller):
                 
     def testVersionLocalFS(self):
         required_version =('LocalFS-1-2-andreas', 'LocalFS-1-3-andreas')
-        version_path = str(ZOPE_HOME) + "/Products/LocalFS/version.txt"
+        version_path = str(INSTANCE_HOME) + "/Products/LocalFS/version.txt"
 
         if not exists(version_path):
             return 0
@@ -156,7 +156,7 @@ class ProductInstaller(CPSInstaller):
             return installed_version in required_version
     
     def testReachConfigFile(self):
-        config_file_path = str(ZOPE_HOME) +"/var/localfs_dirs.txt"
+        config_file_path = str(INSTANCE_HOME) +"/var/localfs_dirs.txt"
         return exists(config_file_path)
         
 def install(self):
