@@ -2,12 +2,14 @@
 # $Id$
 """Return custom document layout."""
 
+
 cpslocalfs_layout = {
     'widgets': {
-        'Basepath': {
-            'type': 'String Widget',
+        'lfsbasepath': {
+            'type': 'Path Widget',
             'data': {
-                'fields': ['Basepath'],
+    
+                'fields': ['lfsbasepath'],
                 'is_i18n': 1,
                 'is_required': 1,
                 'label_edit': 'label_basepath',
@@ -20,9 +22,12 @@ cpslocalfs_layout = {
     'layout': {
         'style_prefix': 'layout_default_',
         'ncols': 1,
-        'rows': [[{'widget_id': 'Basepath'},],],
+        'rows': [[{'widget_id': 'lfsbasepath'},],],
         },
     }
+
+
+
 
 
 
