@@ -14,6 +14,6 @@
 # WARNING : Removing a path from this list does not remove
 # previous CPSLocalFS instancied with this path.
 ################################
-/tmp
-#/home/sastier/tmp
-/home/zopes
+/tmp/
+#/home/sastier/cpslocalfs/demo/
+/home/zopes/
