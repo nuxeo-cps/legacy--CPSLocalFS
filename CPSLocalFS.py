@@ -58,12 +58,12 @@ class CPSLocalFS(LocalFS, BaseDocument):
         title = datamodel['Title']
         basepath = datamodel['basepath']
         LocalFS.__init__(self, id, title, basepath, None, None)
-        
+
     security.declareProtected(ModifyPortalContent, 'edit')
     def edit(self, *args, **kw):
         print args
         print kw
-        
+
     security.declareProtected(ModifyPortalContent, 'updateProperties')
     def updateProperties(self):
         """ Update CPSLocalFS object properties."""
@@ -85,7 +85,7 @@ class CPSLocalFS(LocalFS, BaseDocument):
         """Called after the datamodel commit, its purpose is to
         update the basepath value of LocalFS."""
         self.updateProperties()
-               
+
 ##    security.declareProtected(ModifyPortalContent, 'getIconPath')
 ##    def getIconPath(self, type):
 ##        """ Return the icon registered fo a given type."""
@@ -135,7 +135,7 @@ class CPSLocalFS(LocalFS, BaseDocument):
         st += "Path: " +self.getPath()+ "\n"
         st += "Description: " +self.getDescription()+ "\n"
         return st
-        
+
 InitializeClass(CPSLocalFS)
 
 
