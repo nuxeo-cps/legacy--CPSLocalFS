@@ -3,17 +3,17 @@
 $Id$"""
 __version__='$Revision$'
 
-
 from Products.CMFCore.CMFCorePermissions import View, ModifyPortalContent
 from Products.CPSCore.CPSBase import CPSBase_adder
 from Products.CMFCore import CMFCorePermissions
 from Products.LocalFS.LocalFS import LocalFS
 from AccessControl import ClassSecurityInfo
-#from Products.PortalTransforms.MimeTypesRegistry import MimeTypesRegistry
 from Globals import InitializeClass
 from Products.CPSDocument.CPSDocument import CPSDocument as BaseDocument
-#from zLOG import LOG, DEBUG, INFO
-factory_type_information = ({
+#from Products.PortalTransforms.MimeTypesRegistry import MimeTypesRegistry
+
+factory_type_information = (
+    {
       'id': 'CPS Local File System',
       'title': 'portal_type_CPSLocalFS_title',
       'description': 'portal_type_CPSLocalFS_description',
@@ -25,25 +25,23 @@ factory_type_information = ({
       'allowed_content_types': (),
       'immediate_view':'cpslocalfs_edit_form',
       'actions': (
-                  {'id': 'view',
-                  'name': 'action_view',
-                  'action': 'cpslocalfs_folder_contents',
-                  'permissions': (View,)},
-                  {'id': 'edit',
-                   'name': 'action_modify',
-                   'action': 'cpsdocument_edit_form',
-                   'permissions': (ModifyPortalContent,),},
-                            
-                
-            ),
-     'cps_proxy_type': '',
-     'cps_is_searchable': 0,
-      },
+                   {'id': 'view',
+                    'name': 'action_view',
+                    'action': 'cpslocalfs_folder_contents',
+                    'permissions': (View, )},
+                   {'id': 'edit',
+                    'name': 'action_modify',
+                    'action': 'cpsdocument_edit_form',
+                    'permissions': (ModifyPortalContent, ), },
+                 ),
+      'cps_proxy_type': '',
+      'cps_is_searchable': 0,
+    },
   )
 
 class CPSLocalFS(LocalFS, BaseDocument):
     """
-    Creates LocalFS to edit objects
+    Creat CPSLocalFS to edit objects
     on the file system.
     """
     
@@ -55,21 +53,20 @@ class CPSLocalFS(LocalFS, BaseDocument):
     def __init__(self, id, **kw):
         BaseDocument.__init__(self, id, **kw)
         datamodel = kw.get('datamodel')
-        a_title = datamodel['Title']
-        a_basepath = datamodel['basepath']
-        a_descript = datamodel['Description']
-        LocalFS.__init__(self, id, a_title, a_basepath, "username", "pswd")
+        title = datamodel['Title']
+        basepath = datamodel['basepath']
+        LocalFS.__init__(self, id, title, basepath, "username", "pswd")
         
     security.declareProtected(ModifyPortalContent, 'edit')
     def edit(self, *args, **kw):
         print args
         print kw
         
-    security.declareProtected(ModifyPortalContent, 'editProperties')
-    def editProperties(self):
-        """ Edit CPSLocalFS object properties."""
-        self.manage_changeProperties(title = self.getTitle(),\
-                                    description = self.getDescription(),\
+    security.declareProtected(ModifyPortalContent, 'updateProperties')
+    def updateProperties(self):
+        """ Update CPSLocalFS object properties."""
+        self.manage_changeProperties(title = self.getTitle(),
+                                    description = self.getDescription(),
                                     basepath = self.getPath())
         
 ##    security.declareProtected(ModifyPortalContent, 'getIconPath')
@@ -82,8 +79,9 @@ class CPSLocalFS(LocalFS, BaseDocument):
 
     security.declarePrivate('postCommitHook')
     def postCommitHook(self, datamodel=None):
-        # this is called just after the dm commit
-        self.editProperties()
+        """Called after the datamodel commit, its purpose is to
+        update the basepath value of LocalFS."""
+        self.updateProperties()
 
     #
     # Getters and Setters
@@ -93,22 +91,22 @@ class CPSLocalFS(LocalFS, BaseDocument):
     def getPath(self):
         return self.basepath
 
-    def setPath(self, a_path):
-        self.basepath= a_path
+    def setPath(self, path):
+        self.basepath= path
 
     #--
     def getDescription(self):
         return self.description
 
-    def setDescription(self, a_description):
-        self.description = a_description
+    def setDescription(self, description):
+        self.description = description
 
     #--
     def getTitle(self):
         return self.title
 
-    def setTitle(self, a_titre):
-        self.title = a_titre
+    def setTitle(self, titre):
+        self.title = titre
 
     #
     # Helpers
@@ -121,19 +119,17 @@ class CPSLocalFS(LocalFS, BaseDocument):
         path and description.
         """
         st = " \n"
-        st += "Title: "+self.getTitle()+"\n"
-        st += "Path: "+self.getPath()+"\n"
-        st += "Description: "+self.getDescription()+"\n"
+        st += "Title: " +self.getTitle()+ "\n"
+        st += "Path: " +self.getPath()+ "\n"
+        st += "Description: " +self.getDescription()+ "\n"
         return st
-
-
         
 InitializeClass(CPSLocalFS)
+
 
 def addCPSLocalFS(container, id, **kw):
     """
     Add a CPS local file system object to a folder
     """
     ob = CPSLocalFS(id, **kw)
-    return CPSBase_adder(container, ob) 
- 
+    return CPSBase_adder(container, ob)

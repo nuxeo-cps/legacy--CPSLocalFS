@@ -18,7 +18,7 @@ class PathWidget(CPSStringWidget):
     """
 
     meta_type = "Path Widget"
-    field_types = ('CPS String Field',)
+    field_types = ('CPS String Field', )
     display_width = 20
     size_max = 100
     _properties = CPSStringWidget._properties
@@ -30,18 +30,28 @@ class PathWidget(CPSStringWidget):
      
 
     def validate(self, datastructure, **kw):
-        """Update datamodel from user data in datastructure."""
+        """Update datamodel from user data in datastructure.
+        Only path listed in the var/localfs_dirs.txt can be
+        acceded, moreover CPSLocalFS will only display files
+        on which the Zope process has read and write access
+        rights."""
         widget_id = self.getWidgetId()
         datamodel = datastructure.getDataModel()
         field_id = self.fields[0]
-        a_path = datastructure.get(widget_id,'')
+        path = datastructure.get(widget_id, '')
 
+        # Make sure path doesn't feature any '..'
+        if path.find("..") != -1:
+            datastructure.setError(widget_id, 
+                "psm_cpslocalfs_invalid_basepath_message")
+            return 0
+        
         # Checks if the configuration file is accessible.
-        f_path = str(CLIENT_HOME)+"/localfs_dirs.txt"
+        f_path = str(ZOPE_HOME) + "/var/localfs_dirs.txt"
         if not exists(f_path):
             LOG("PathWidget: ", DEBUG,
                 "missing localfs_dirs.txt configuration file")
-            datastructure.setError(widget_id,\
+            datastructure.setError(widget_id, 
                 "psm_cpslocalfs_missing_config_file_message")
             return 0
         
@@ -50,37 +60,38 @@ class PathWidget(CPSStringWidget):
         authorized = 0
         while 1:
             line = f.readline()[:-1]
-            if line == "": break
+            if line == "":
+                break
             if not line.startswith('#'):
-                if a_path.startswith(line):
+                if path.startswith(line):
                     authorized = 1
         f.close()
         if not authorized:
-            LOG("PathWidget ", DEBUG,"\n Provided path '"+a_path+ \
+            LOG("PathWidget: ", DEBUG, "\n Provided path '" +path+ 
                "'is unauthorized, must match a prefix in var/localfs_dirs.txt")
-            datastructure.setError(widget_id,\
+            datastructure.setError(widget_id, 
                 "psm_cpslocalfs_unauthorized_basepath_message")
             return 0
           
         # we consider the path to be valid
         ok = 1
-        if not exists(a_path):
+        if not exists(path):
             LOG("PathWidget: ", DEBUG, "Path doesn't exist")
-            datastructure.setError(widget_id,\
+            datastructure.setError(widget_id, 
                 "psm_cpslocalfs_invalid_basepath_message")
             ok = 0
         else:
-            if not isdir(a_path):
+            if not isdir(path):
                 LOG("PathWidget: ", DEBUG, "Path is not a directory")
-                datastructure.setError(widget_id,\
+                datastructure.setError(widget_id, 
                     "psm_cpslocalfs_unknown_basepath_message")
                 ok = 0
             else:
                 LOG("PathWidget Field_id : ", DEBUG, field_id)
-                datamodel.set(field_id,a_path)
-                if not access(a_path,W_OK):
+                datamodel.set(field_id, path)
+                if not access(path, W_OK):
                     LOG("PathWidget: ", DEBUG, "Insufficient Rights")
-                    datastructure.setError(widget_id,\
+                    datastructure.setError(widget_id, 
                         "psm_cpslocalfs_insufficients_rights_message")
                     ok = 0     
         return ok
@@ -93,10 +104,9 @@ class PathWidget(CPSStringWidget):
     def render(self, mode, datastructure, **kw):
         """Render this widget from the datastructure or datamodel."""
         value = datastructure[self.getWidgetId()]
-        
-        if mode in ['view','edit','create']:
+        if mode in ['view', 'edit', 'create']:
             desc = {
-                  'id'  : self.getHtmlWidgetId(),
+                  'id': self.getHtmlWidgetId(),
                   'name': self.getHtmlWidgetId(),
                   'value': value,
                   'size': self.display_width,
