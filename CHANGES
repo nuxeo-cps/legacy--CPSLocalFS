@@ -3,8 +3,7 @@ Requires:
 -
 New features:
 ~~~~~~~~~~~~~
-- New PathWidget to validate the user path input
-  Inheritance modified.
+-
 Bug fixes:
 ~~~~~~~~~~
 -
