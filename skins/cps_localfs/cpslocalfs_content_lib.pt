@@ -384,6 +384,10 @@ format:</pre>
 
 
 <!-- ============================================================ -->
+
+
+
+
 <pre>all doc information:</pre>
 <metal:block define-macro="info_detail">
 <div tal:define="action python:test(info['type'] in ('Section','Workspace'),
@@ -395,23 +399,29 @@ format:</pre>
   </div>
   <img tal:replace="structure python:here.getImgTag(info['icon'],
                                      base_url=base_url, title='%s, id:%s' % (info['type'], info['id']))" />
-   
-  <a href="" tal:attributes="href string:${base_url}${info/rpath}/${action};">
- 
-   <b><span tal:replace="info/title_or_id">ID</span></b></a>
-    <br/>type :  <span tal:replace="info/type">type</span><br/>
-  <br />
-  <a href="" tal:attributes="href string:${base_url}${info/rpath}/${action}"> 
-  <small>
-    <tal:block define="status_short_fmt not:nothing;
-                       status_time not:nothing;">
-      <metal:block use-macro="here/cpslocalfs_content_lib/macros/status" />
+
+  <tal:block define="item_doc python: str(info['doc'])[1:].split(' ')[0]">
+    <tal:block condition="python:item_doc == 'Folder'">
+      <a href="" tal:attributes="href string:${base_url}${info/rpath}/cpslocalfs_folder_contents;">
+        <b><span tal:replace="info/title_or_id">ID</span></b>
+      </a>
     </tal:block>
-    <tal:block condition="info/size|nothing">, <span tal:replace="info/size">
-      10 kB</span>
+
+
+     <tal:block condition="python:item_doc != 'Folder'">
+     <a href="" tal:attributes="href string:${base_url}${info/rpath}">
+        <b><span tal:replace="info/title_or_id">ID</span></b>
+      </a>
     </tal:block>
-  </small>
-  </a>
+
+
+
+  </tal:block>
+<br>
+
+
+
+
   <tal:block tal:condition="info/start_str|info/end_str|nothing">
     <br /><small>
       <span i18n:translate="label_from" tal:omit-tag="">From</span>
