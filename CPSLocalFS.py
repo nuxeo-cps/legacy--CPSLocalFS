@@ -55,7 +55,7 @@ class CPSLocalFS(LocalFS, BaseDocument):
         datamodel = kw.get('datamodel')
         title = datamodel['Title']
         basepath = datamodel['basepath']
-        LocalFS.__init__(self, id, title, basepath, "username", "pswd")
+        LocalFS.__init__(self, id, title, basepath, None, None)
         
     security.declareProtected(ModifyPortalContent, 'edit')
     def edit(self, *args, **kw):

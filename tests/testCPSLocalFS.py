@@ -17,7 +17,19 @@ class TestCPSLocalFS(CPSLocalFSTestCase.CPSLocalFSTestCase):
     def beforeTearDown(self):
         self.logout()
 
-    def test_Access_CPSLocalFS_ok(self):
+    def testVersionLocalfsOK(self):
+        required_version ="LocalFS-1-2-andreas"
+        version_path = str(ZOPE_HOME) + "/Products/LocalFS/version.txt"
+        
+        if exists(version_path):
+            version_file= open(version_path)
+            installed_version = version_file.readline()
+            version_file.close()
+            self.assert_(required_version==installed_version)
+        else:
+            self.assert_(0)
+            
+    def testAccessCPSLocalfsOK(self):
         """ Make sure a file can be acceded """
         path = ZOPE_HOME + "/Products/CPSLocalFS/doc"
         title = "Test CPSLocalFS OK"
@@ -34,6 +46,7 @@ class TestCPSLocalFS(CPSLocalFSTestCase.CPSLocalFSTestCase):
             if file.url == "install.txt":
                 found = 1
         self.assert_(found)
+        
 
 def test_suite():
     suite = unittest.TestSuite()

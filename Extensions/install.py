@@ -146,12 +146,15 @@ class ProductInstaller(CPSInstaller):
     def testVersionLocalFS(self):
         required_version ="LocalFS-1-2-andreas"
         version_path = str(ZOPE_HOME) + "/Products/LocalFS/version.txt"
-        version_file= open(version_path)
-        installed_version = version_file.readline()
-        version_file.close()
-        return required_version==installed_version
-        
-       
+
+        if not exists(version_path):
+            return 0
+        else:
+            version_file= open(version_path)
+            installed_version = version_file.readline()
+            version_file.close()
+            return required_version==installed_version
+    
     def testReachConfigFile(self):
         config_file_path = str(ZOPE_HOME) +"/var/localfs_dirs.txt"
         return exists(config_file_path)
