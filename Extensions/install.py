@@ -36,7 +36,7 @@ HOWTO USE THAT ?
 
 from Products.CPSInstaller.CPSInstaller import CPSInstaller
 from Products.CMFCore.utils import getToolByName
-from Products.CMFCore.Expression import Expression
+
 
 class ProductInstaller(CPSInstaller):
     product_name = 'CPSLocalFS'
@@ -64,6 +64,12 @@ class ProductInstaller(CPSInstaller):
                                         ws_chains)
         self.verifyLocalWorkflowChains(self.portal['sections'],
                                         se_chains)
+
+
+        # Portal Widgets.
+        lfs_widgets = self.portal.getCPSLocalFSDocumentWidgets()
+        self.verifyWidgets(lfs_widgets)
+        #self.log(str(lfs_widgets))
         
         # Portal Types.
         lfs_types = self.portal.getCPSLocalFSDocumentTypes()
@@ -78,16 +84,26 @@ class ProductInstaller(CPSInstaller):
              },
         }
         self.verifyContentTypes(ptypes)
+
+   
+        
+ 
+        
         # Portal Schemas.
         lfs_schemas = self.portal.getCPSLocalFSDocumentSchemas()
         self.verifySchemas(lfs_schemas)
         #self.log(str(lfs_schemas))
+
+
+
 
         # Portal Layouts.
         lfs_layouts = self.portal.getCPSLocalFSDocumentLayouts()
         self.verifyLayouts(lfs_layouts)
         #self.log(str(lfs_layouts))
 
+
+        
         # Portal Actions :
         #self.updateActions()
         
