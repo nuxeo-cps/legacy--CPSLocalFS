@@ -8,6 +8,7 @@ from Products.CMFCore.DirectoryView import registerDirectory
 from Products.CMFCore.CMFCorePermissions import AddPortalContent
 
 import CPSLocalFS
+import PathWidget
 
 contentClasses = ()
 contentConstructors = ()
