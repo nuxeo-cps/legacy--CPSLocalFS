@@ -58,10 +58,10 @@
   <table border=0 cellpadding=2 cellspacing=2>
   <tr>
     <th align=left valign=top>&nbsp;</th>
-    <th align=left valign=top>Name</th>
-    <th align=left valign=top>Last Modified&nbsp;</th>
-    <th align=left valign=top>Size&nbsp;</th>
-    <th align=left valign=top>Type</th>
+    <th align=left valign=top> <span i18n:translate="file_name">Name</span></th>
+    <th align=left valign=top> <span i18n:translate="file_last_modified">Last Modified</span>&nbsp;</th>
+    <th align=left valign=top> <span i18n:translate="file_size">Size</span>&nbsp;</th>
+    <th align=left valign=top> <span i18n:translate="file_type">Type</span></th>
   </tr>
   <tal:block repeat = "lf local_files">
     <tal:block define = " icon lf/icon;
