@@ -10,6 +10,8 @@ from Products.LocalFS.LocalFS import LocalFS
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from Products.CPSDocument.CPSDocument import CPSDocument as BaseDocument
+from os.path import exists, isdir
+from os import access, X_OK, R_OK, W_OK, listdir
 #from Products.PortalTransforms.MimeTypesRegistry import MimeTypesRegistry
 
 factory_type_information = (
@@ -68,7 +70,22 @@ class CPSLocalFS(LocalFS, BaseDocument):
         self.manage_changeProperties(title = self.getTitle(),
                                     description = self.getDescription(),
                                     basepath = self.getPath())
-        
+
+    security.declareProtected(ModifyPortalContent, 'isAccessible')
+    def isAccessible(self,path):
+        """ Check if a path points to a file or directory and if it has
+        read or exec access rights."""
+        if isdir(path):
+            return access(path, R_OK and X_OK and W_OK)
+        else:
+            return access(path, R_OK)
+
+    security.declarePrivate('postCommitHook')
+    def postCommitHook(self, datamodel=None):
+        """Called after the datamodel commit, its purpose is to
+        update the basepath value of LocalFS."""
+        self.updateProperties()
+               
 ##    security.declareProtected(ModifyPortalContent, 'getIconPath')
 ##    def getIconPath(self, type):
 ##        """ Return the icon registered fo a given type."""
@@ -77,11 +94,6 @@ class CPSLocalFS(LocalFS, BaseDocument):
 ##        for type in mimetypes:
 ##            return type.icon_path
 
-    security.declarePrivate('postCommitHook')
-    def postCommitHook(self, datamodel=None):
-        """Called after the datamodel commit, its purpose is to
-        update the basepath value of LocalFS."""
-        self.updateProperties()
 
     #
     # Getters and Setters
