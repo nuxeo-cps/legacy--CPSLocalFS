@@ -7,38 +7,39 @@
                         parent_title python:here.aq_parent.title_or_id();
                        ">
 
-<metal:body use-macro="here/cpslocalfs_content_lib/macros/master">
+<metal:body use-macro="here/content_lib/macros/master">
 
 <metal:header metal:fill-slot="header">
-  <tal:block condition="python:checkPerm('List folder contents', here, 'aq_parent')">
-    <tal:block condition="python:parent_title=='Root of Workspaces'">  
-      <a href="../xx"
-          tal:attributes="href python:test(hasattr(here.aq_parent.aq_parent,
-          'portal_url'), '../folder_contents', '..')">
-        <img tal:replace="structure python:here.getImgTag('UpFolder_icon.gif',
-                            base_url=base_url)" />
-        <span i18n:translate="">description_up_to
-        <b i18n:name="up_id" tal:content="parent_title">
-        Up ID</b></span>
-      </a>
-    </tal:block>
- </tal:block>  
- <tal:block condition="python:checkPerm('List folder contents', here, 'aq_parent')">
-    <tal:block condition="python:parent_title!='Root of Workspaces'">  
-      <a href="../xx"
-          tal:attributes="href python:test(hasattr(here.aq_parent.aq_parent,
-          'portal_url'), '../cpslocalfs_folder_contents', '..')">
-        <img tal:replace="structure python:here.getImgTag('UpFolder_icon.gif',
-                            base_url=base_url)" />
-        <span i18n:translate="">description_up_to
-        <b i18n:name="up_id" tal:content="parent_title">
-        Up ID</b></span>
-      </a>
-    </tal:block>  
+<tal:block condition="python:checkPerm('List folder contents',
+                               here, 'aq_parent')">
+  <tal:block condition="python:parent_title=='Root of Workspaces'
+                             or parent_title=='Root of Sections'">  
+    <a href="../xx"
+        tal:attributes="href python:test(hasattr(here.aq_parent.aq_parent,
+        'portal_url'), '../folder_contents', '..')">
+      <img tal:replace="structure python:here.getImgTag('UpFolder_icon.gif',
+                         base_url=base_url)" />
+      <span i18n:translate="">description_up_to
+      <b i18n:name="up_id" tal:content="parent_title">
+      Up ID</b></span>
+    </a>
   </tal:block>
-
-    
-
+</tal:block>  
+<tal:block condition="python:checkPerm('List folder contents',
+                                here, 'aq_parent')">
+  <tal:block condition="python:parent_title!='Root of Workspaces'
+                            and parent_title!='Root of Sections'">  
+    <a href="../xx"
+        tal:attributes="href python:test(hasattr(here.aq_parent.aq_parent,
+        'portal_url'), '../cpslocalfs_folder_contents', '..')">
+      <img tal:replace="structure python:here.getImgTag('UpFolder_icon.gif',
+                          base_url=base_url)" />
+      <span i18n:translate="">description_up_to
+      <b i18n:name="up_id" tal:content="parent_title">
+      Up ID</b></span>
+     </a>
+  </tal:block>
+</tal:block>
 
 <h1 tal:content="here/title_or_id">Page Title</h1>
 <a href="" accesskey="V"
@@ -50,9 +51,6 @@
 </metal:header>
 
 
-
-
-
 <metal:main fill-slot="main"
      tal:define="list_here python:checkPerm('List folder contents', here);">
 
@@ -62,43 +60,42 @@
 </div>
 
 
-  <tal:block define="no_form python:not checkPerm('Delete objects', here);
+<tal:block define="no_form python:not checkPerm('Delete objects', here);
                     nav_action string:folder_contents;
                     items python:here.getFolderContents(displayed=displayed);
                     context_url context_url|here/getContextUrl;
-		    base python:base_url + context_url;
-		    ">
- 
- <tal:block repeat="item items">
-    
-      
-        
-  
+		    base python:base_url + context_url;">
+  <tal:block repeat="item items"> 
     <tal:block define="item_id python:item.getId();
                        item_meta_type python:item.meta_type;
-		       item_content_type python:item.content_type;">
+		       item_content_type python:item.content_type;
+                         is_folder python:item_meta_type=='Folder';
+			sp_action string:null ">
       <tal:block condition="python:item_meta_type=='Folder'">
-      
-
-      <img tal:replace="structure python:here.getImgTag('folder_icon.gif',
+        <img tal:replace="structure python:here.getImgTag('folder_icon.gif',
                                      base_url=base_url, title='%s, id:%s' % 
 					(item_meta_type, item_id))" />
         <a href="" tal:attributes=
- "href string:${base_url}${context_url}/${item_id}/cpslocalfs_folder_contents">
+         "href string:${base_url}${context_url}/${item_id}/cpslocalfs_folder_contents">
           <b><span tal:replace="item_id"> ID </span> </b><br/>
         </a>
       </tal:block>
       <tal:block condition="python:item_meta_type!='Folder'">
+        <img tal:replace="structure python:here.getImgTag(
+                          here.getIconPath(item_content_type),
+                                     base_url=base_url, title='%s, id:%s' % 
+					(item_meta_type, item_id))" />
         <a href="" tal:attributes=
-             "href string:${base_url}${context_url}/${item_id}/">
+               "href string:${base_url}${context_url}/${item_id}/">
           <b><span tal:replace="item_id"> ID </span></b>
-             ,<span tal:replace="python:item.size/1024">size</span>&nbsp;Ko.
-            <br/>
+          &nbsp;<span tal:replace="python:item.size/1024">size</span>&nbsp;Ko.
+          <br/>
         </a>
       </tal:block>
     </tal:block>
   </tal:block>
-  </tal:block>
+</tal:block>
+
 </metal:main>
 </metal:body>
 </metal:html>
