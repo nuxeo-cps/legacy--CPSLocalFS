@@ -69,32 +69,34 @@
                           size lf/display_size;
                           mtime lf/display_mtime;
                           type lf/type;
-                          adapt python:test(type=='directory',
-                                 'cpslocalfs_folder_contents','')">
-      <tr>
-        <td align=left valign=top>
-	  <img src tal:attributes="src string:${icon}" />&nbsp;</td>
-        <td>
-          <tal:block condition="python:type=='directory'">
-           <a href="" tal:attributes="href string:${context_url}/${url}/cpslocalfs_folder_contents">
-	   <span tal:replace="url">Name of lf</span></a>&nbsp;
-          </tal:block>
-          <tal:block condition="python:type!='directory'">
-           <a href="" tal:attributes="href string:${context_url}/${url}">
-	   <span tal:replace="url">Name of lf</span></a>&nbsp;
-          </tal:block>
-          </td>
-        <td>
-          <span tal:replace="mtime">Last modified</span>&nbsp;</td>
-        <td>
-          <span tal:replace="size">Size</span>&nbsp;</td>
-        <td>
-          <span tal:replace="type">Type</span>&nbsp;</td>
-      </tr>
+                          path lf/path;
+                          id lf/getId;
+                          isAccessible python:cpslocalfs.isAccessible(path)">
+      <tal:block condition="isAccessible">
+        <tr>
+          <td align=left valign=top>
+            <img src tal:attributes="src string:${icon}" />&nbsp;</td>
+          <td>
+            <tal:block condition="python:type=='directory'">
+              <a href="" tal:attributes=
+                  "href string:${context_url}/${url}/cpslocalfs_folder_contents"> 
+                <span tal:replace="url">Name of lf</span></a>&nbsp;
+            </tal:block>
+            <tal:block condition="python:type!='directory'">
+              <a href="" tal:attributes="href string:${context_url}/${url}">                 
+                <span tal:replace="url">Name of lf</span></a>&nbsp;
+            </tal:block></td>
+          <td>
+            <span tal:replace="mtime">Last modified</span>&nbsp;</td>
+          <td>
+            <span tal:replace="size">Size</span>&nbsp;</td>
+          <td>
+            <span tal:replace="type">Type</span>&nbsp;</td>
+        </tr>
+      </tal:block>
     </tal:block>
   </tal:block>
   </table>
-
 </tal:block>
 
 </metal:main>
