@@ -10,21 +10,21 @@
   <tr>
     <th align="right" i18n:translate="label_title">Title</th>
       <td>
-        <input type="text" name="title"
+        <input type="text" name="Title"
                tal:attributes="value here/title|nothing" />
       </td>
     </tr>
     <tr>
       <th align="right" i18n:translate="label_basepath">Host</th>
       <td>
-        <input type="text" name="basepath"
+        <input type="text" name="Basepath"
                tal:attributes="value here/basepath|nothing" />
       </td>
     </tr>
     <tr>
       <th align="right" i18n:translate="label_description">Description</th>
       <td>
-        <textarea cols="60" rows="8" name="description"
+        <textarea cols="60" rows="8" name="Description"
          tal:content="here/description|nothing">
         </textarea>
       </td>
