@@ -5,27 +5,28 @@
 <metal:block fill-slot="header" />
 
 <metal:block fill-slot="main">
+
 <form action="cpslocalfs_edit" method="post">
   <table>
   <tr>
     <th align="right" i18n:translate="label_title">Title</th>
       <td>
-        <input type="text" name="Title"
-               tal:attributes="value here/title|nothing" />
+        <input type="text" name="title"
+               tal:attributes="value here/lfs_title|nothing" />
       </td>
     </tr>
     <tr>
       <th align="right" i18n:translate="label_basepath">Host</th>
       <td>
-        <input type="text" name="Basepath"
-               tal:attributes="value here/basepath|nothing" />
+        <input type="text" name="basepath"
+               tal:attributes="value here/lfs_basepath|nothing" />
       </td>
     </tr>
     <tr>
       <th align="right" i18n:translate="label_description">Description</th>
       <td>
-        <textarea cols="60" rows="8" name="Description"
-         tal:content="here/description|nothing">
+        <textarea cols="60" rows="8" name="description"
+         tal:content="here/lfs_description|nothing">
         </textarea>
       </td>
     </tr>
