@@ -1,11 +1,7 @@
 
 <metal:html tal:define="
-                        displayed python:request.get('displayed', ['']);
-                        parent_title python:here.aq_parent.title_or_id();
-                   ">
-
+             parent_title python:here.aq_parent.title_or_id();">
 <metal:body use-macro="here/content_lib/macros/master">
-
 <metal:header metal:fill-slot="header">
 
 <tal:block condition="python:checkPerm('List folder contents',
@@ -55,46 +51,52 @@
   <span tal:define="redirect python: response.redirect(url)"></span>
 </div>
 
+<tal:block define = " cpslocalfs here/getContent;
+                      local_files cpslocalfs/fileValues;
+                      context_url context_url|here/getContextUrl;">
 
-
-<tal:block define=" 
-                    doc here/getContent;
-                    dummy here/updateLocalFSAttributs;
-                    items python:doc.getFolderContents(displayed=displayed);
-                    context_url context_url|here/getContextUrl;">
-
-   
-  <tal:block repeat="item items"> 
-    <tal:block define="item_id python:item.getId();
-                       item_meta_type python:item.meta_type;
-		       item_content_type python:item.content_type; ">
-
-      <tal:block condition="python:item_meta_type == 'Folder'">
-        <img tal:replace="structure python:doc.getImgTag('folder_icon.gif',
-                                     base_url=base_url, title='%s, id:%s' % 
-					(item_meta_type, item_id))" />
-        <a href="" tal:attributes=
-         "href string:${context_url}/${item_id}/cpslocalfs_folder_contents">
-          <b><span tal:replace="item_id"> ID </span> </b><br/>
-        </a>
-      </tal:block>
-      <tal:block condition="python:item_meta_type!='Folder'">
-        <img tal:replace="structure python:here.getImgTag(
-                          doc.getIconPath(item_content_type),
-                                     base_url=base_url, title='%s, id:%s' % 
-					(item_meta_type, item_id))" />
-        <a href="" tal:attributes=
-               "href string:${context_url}/${item_id}">
-          <b><span tal:replace="item_id"> ID </span></b>
-          &nbsp;<span tal:replace="python:item.size/1024">size</span>&nbsp;Ko.
-          <br/>
-        </a>
-      </tal:block>
+  <table border=0 cellpadding=2 cellspacing=2>
+  <tr>
+    <th align=left valign=top>&nbsp;</th>
+    <th align=left valign=top>Name</th>
+    <th align=left valign=top>Last Modified&nbsp;</th>
+    <th align=left valign=top>Size&nbsp;</th>
+    <th align=left valign=top>Type</th>
+  </tr>
+  <tal:block repeat = "lf local_files">
+    <tal:block define = " icon lf/icon;
+                          url lf/url;
+                          size lf/display_size;
+                          mtime lf/display_mtime;
+                          type lf/type;
+                          adapt python:test(type=='directory',
+                                 'cpslocalfs_folder_contents','')">
+      <tr>
+        <td align=left valign=top>
+	  <img src tal:attributes="src string:${icon}" />&nbsp;</td>
+        <td>
+          <tal:block condition="python:type=='directory'">
+           <a href="" tal:attributes="href string:${context_url}/${url}/cpslocalfs_folder_contents">
+	   <span tal:replace="url">Name of lf</span></a>&nbsp;
+          </tal:block>
+          <tal:block condition="python:type!='directory'">
+           <a href="" tal:attributes="href string:${context_url}/${url}">
+	   <span tal:replace="url">Name of lf</span></a>&nbsp;
+          </tal:block>
+          </td>
+        <td>
+          <span tal:replace="mtime">Last modified</span>&nbsp;</td>
+        <td>
+          <span tal:replace="size">Size</span>&nbsp;</td>
+        <td>
+          <span tal:replace="type">Type</span>&nbsp;</td>
+      </tr>
     </tal:block>
   </tal:block>
+  </table>
+
 </tal:block>
 
 </metal:main>
 </metal:body>
-
 </metal:html>
