@@ -49,9 +49,12 @@ class ProductInstaller(CPSInstaller):
         # Portal CPS Update.
         self.updateCPS()
         
-         # Portal Skins.
+        # Portal Skins.
         self.verifySkins(self.SKINS)
         self.resetSkinCache()
+
+        # Portal Translation 
+        self.setupTranslations('CPSLocalFS')
         
         # Portal Workflow.
         self.allowContentTypes('CPSLocalFS', ('Workspace', 'Section'))
