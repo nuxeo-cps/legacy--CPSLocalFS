@@ -38,6 +38,7 @@ HOWTO USE THAT ?
 from Products.CPSInstaller.CPSInstaller import CPSInstaller
 from Products.CMFCore.utils import getToolByName
 from os.path import exists, isdir
+from sys import platform
 from zLOG import LOG, INFO, DEBUG
 
 
@@ -48,6 +49,13 @@ class ProductInstaller(CPSInstaller):
     
     def install(self):
         self.log("Starting CPSLocalFS install.")
+
+        # Make sure this install is run on a linux plateform
+        if platform[:5]!='linux':
+            self.log("CPSLocalFS can only be installed on a linux server")
+            self.log("CPSLocalFS install aborted")
+        self.log("Operating System: " + platform[:5])
+    
         
         # Test if CPSLocalFS has all it needs.
         if not self.testVersionLocalFS():
