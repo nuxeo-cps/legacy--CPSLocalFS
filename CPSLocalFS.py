@@ -46,7 +46,7 @@ factory_type_information = ({
 
 
 
-class CPSLocalFS(LocalFS, Folder):
+class CPSLocalFS(Folder):
     """Object that creates Zope objects from files in the
        local file system."""
     meta_type = 'CPSLocalFS'
@@ -60,16 +60,29 @@ class CPSLocalFS(LocalFS, Folder):
         datamodel = kw.get('datamodel')
         self.setTitle(datamodel['Title'])
         # Warning : mother class LocalFS own a 'basepath'
-        # attribut that must not be override
+        # attribut which must not be override
         self.setPath(datamodel['Basepath'])
         self.setDescription(datamodel['Description'])
-        LocalFS.__init__(self, self.getTitle(), self.getPath(), None, None)
+        lfs = LocalFS(self.getTitle(), self.getPath(), None, None)
+        self.setLocalFS(lfs)
+
 
         
     security.declareProtected(ModifyPortalContent, 'edit')
     def edit(self, *args, **kw):
         print args
         print kw
+
+    def getContent(self):
+        """ returns a localFS contents"""
+        return self.getLocalFS().getContent()
+
+    def updateLocalFSAttributs(self):
+        """ Add LocalFS attributs to CPSLocalFS """
+        lfs_items = self.getLocalFS().getContent().getFolderContents()
+        for item in lfs_items:
+            setattr(self,item.getId(),item)
+        return  "Attribut added !"
 
                 
     security.declareProtected(ModifyPortalContent, 'editProperties')
@@ -78,7 +91,8 @@ class CPSLocalFS(LocalFS, Folder):
         self.setPath(path)
         self.setDescription(description)
         self.setTitle(title)
-        self.manage_changeProperties(title=title, description=description,\
+        lfs = self.getLocalFS()
+        lfs.manage_changeProperties(title=title, description=description,\
                                     basepath=path)
         
     security.declareProtected(ModifyPortalContent, 'getIconPath')
@@ -93,6 +107,14 @@ class CPSLocalFS(LocalFS, Folder):
     #
     # Getters and Setters
     #
+
+    #--
+    def getLocalFS(self):
+        return self.localFS
+
+    def setLocalFS(self, a_localFS):
+        self.localFS = a_localFS
+
 
     #--
     def getPath(self):
