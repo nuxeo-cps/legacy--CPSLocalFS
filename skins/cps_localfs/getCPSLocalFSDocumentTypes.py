@@ -10,7 +10,7 @@ cpslocalfs_type = {
     'content_meta_type': 'CPS Document',
     'product': 'CPSLocalFS',
     'factory': 'addCPSLocalFS',
-    'immediate_view': 'cpslocalfs_edit_form',
+    'immediate_view': 'cpslocalfs_folder_contents',
     'global_allow': 1,
     'filter_content_types': 0,
     'allowed_content_types': [],
