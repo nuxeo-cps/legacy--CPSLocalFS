@@ -6,19 +6,16 @@ from Products.CPSSchemas.WidgetTypesTool import WidgetTypeRegistry
 from Products.CPSSchemas.BasicWidgets import _isinstance, renderHtmlTag
 from Products.LocalFS.LocalFS import LocalFS
 from Products.CPSLocalFS.CPSLocalFS import CPSLocalFS
-from Globals import InitializeClass
-from zLOG import LOG, DEBUG
 from os.path import exists, isdir
 from os import access, W_OK, listdir
-
-import sys
-import traceback
+from zLOG import LOG, DEBUG, INFO
 
 
 class PathWidget(CPSStringWidget):
-    """ Path Widget class, used to get the user inputs in order to create
-        an instance of CPSLocalFS. Its main purpose it to validate the
-        basepath input."""
+    """ Path Widget class, used to get the user inputs in order to
+    create an instance of CPSLocalFS. Its main purpose it to validate
+    the basepath input.
+    """
 
     meta_type = "Path Widget"
     field_types = ('CPS String Field',)
@@ -44,11 +41,11 @@ class PathWidget(CPSStringWidget):
         f = open('localfs_dirs.txt')
         authorized = 0
         while 1:
-            l = f.readline()[:-1]
-            if l == "": break
-            LOG("path: ", DEBUG,l)
-            if a_path.startswith(l):
-                authorized = 1
+            line = f.readline()[:-1]
+            if line == "": break
+            if not line.startswith('#'):
+                if a_path.startswith(line):
+                    authorized = 1
         f.close()
         if not authorized:
             LOG("PathWidget ", DEBUG,"\n Provided path '"+a_path+ \
@@ -60,13 +57,13 @@ class PathWidget(CPSStringWidget):
         # we consider the path to be valid
         ok = 1
         if not exists(a_path):
-            #LOG("PathWidget: ", DEBUG, "Path doesn't exist")
+            LOG("PathWidget: ", DEBUG, "Path doesn't exist")
             datastructure.setError(widget_id,\
                 "psm_cpslocalfs_invalid_basepath_message")
             ok = 0
         else:
             if not isdir(a_path):
-                #LOG("PathWidget: ", DEBUG, "Path is not a directory")
+                LOG("PathWidget: ", DEBUG, "Path is not a directory")
                 datastructure.setError(widget_id,\
                     "psm_cpslocalfs_unknown_basepath_message")
                 ok = 0
@@ -74,13 +71,10 @@ class PathWidget(CPSStringWidget):
                 LOG("PathWidget Field_id : ", DEBUG, field_id)
                 datamodel.set(field_id,a_path)
                 if not access(a_path,W_OK):
-                    #LOG("PathWidget: ", DEBUG, "Insufficient Rights")
+                    LOG("PathWidget: ", DEBUG, "Insufficient Rights")
                     datastructure.setError(widget_id,\
                         "psm_cpslocalfs_insufficients_rights_message")
-                    ok = 0
-
-               
-                   
+                    ok = 0     
         return ok
 
     
@@ -103,7 +97,6 @@ class PathWidget(CPSStringWidget):
                 desc['maxlength'] = self.size_max
             return renderHtmlTag('input', **desc)
     
-
 
 InitializeClass(PathWidget)
 
