@@ -22,10 +22,10 @@ from Products.CPSInstaller.CPSInstaller import CPSInstaller
 
 def install(self):
     """
-    Starting point !
+    CSPLocalFS Starting Point !
     """
 
-    # Create the installer
+    # CREATE THE INSTALLER
     installer = CPSInstaller(self, 'CPSLocalFS')
     installer.log("Starting CPSLocalFS Install")
 

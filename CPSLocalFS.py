@@ -13,7 +13,7 @@ from AccessControl import ClassSecurityInfo
 from Products.PortalTransforms.MimeTypesRegistry import MimeTypesRegistry
 from Globals import InitializeClass
 
-from zLOG import LOG, INFO, DEBUG
+
     
 factory_type_information = ({
       'id': 'CPS Local File System',
@@ -26,21 +26,19 @@ factory_type_information = ({
       'allowed_content_types': (),
       'immediate_view':'cpslocalfs_edit_form',
       'actions': (
-               
+                  {'id': 'view',
+                  'name': 'action_view',
+                  'action': 'cpslocalfs_folder_contents',
+                  'permissions': (View,)},
                   {'id': 'modify',
                    'name': 'action_modify',
                    'action': 'cpslocalfs_edit_form',
-                   'permissions': (ModifyPortalContent,),
-                   },
-                  {'id': 'new_content',  #sas
-                  'name': 'action_new_content',
-                  'action': 'folder_factories',
-                  'permissions': (ModifyPortalContent,),
-                  'visible': 0},
+                   'permissions': (ModifyPortalContent,),},
+                            
+                
             ),
-     'cps_proxy_type': 'document',
+     'cps_proxy_type': '',
      'cps_is_searchable': 0,
-
       },
   )
 
@@ -56,71 +54,56 @@ class CPSLocalFS(LocalFS, Folder):
     security = ClassSecurityInfo()
 
     def __init__(self, id, **kw):
-        LOG("********** INIT *****2***",INFO,"")
-        datamodel = kw.get('datamodel')
-        self.title = datamodel['Title']
-        self.basepath = datamodel['Basepath']
-        self.description = datamodel['Description']
-        
-
-        LOG("*__init__* datamodel ==> ",INFO,self.datamodel)
-        LOG("*__init__* title ==> ",INFO,self.title)
-        LOG("*__init__* descrip ==>", INFO,self.description)
-        LocalFS.__init__(self, self.title, self.basepath, None, None)
+        self.datamodel = kw.get('datamodel')
+        self.lfs_title = self.datamodel['Title']
+        self.lfs_basepath = self.datamodel['Basepath']
+        self.lfs_description = self.datamodel['Description']
+##        LOG("*__init__* datamodel ==> ",INFO,self.datamodel)
+##        LOG("*__init__* title ==> ",INFO,self.lfs_title)
+##        LOG("*__init__* descrip ==>", INFO,self.lfs_description)
+##        LOG("*__init__* basepath ==>", INFO,self.lfs_basepath)
+        LocalFS.__init__(self, self.lfs_title, self.lfs_basepath, None, None)
         Folder.__init__(self, id, **kw)
 
-        
-   
      
     security.declareProtected(ModifyPortalContent, 'edit')
     def edit(self, *args, **kw):
         print args
         print kw
-
-   
-        
-        
-   # security.declareProtected(ModifyPortalContent, 'editProperties')
-    def editProperties(self, title='', description='', basepath=''):
+                
+    security.declareProtected(ModifyPortalContent, 'editProperties')
+    def editProperties(self, title, basepath, description):
         """ Edit CPSLocalFS object properties."""
-        self.description = description
-        self.title = title
-        self.basepath = basepath
-
-        LOG("*editProp* id  ==> ",INFO,id)
-        LOG("*editProp* kw ==> ",INFO,kw)
-        LOG("*editProp* basepath ==>", INFO, basepath)
-        LOG("*editProp* title ==>",INFO,title)
-        
-        
+        self.lfs_description = description
+        self.lfs_title = title
+        self.lfs_basepath = basepath
+##        LOG("* editLFS * datamodel ==> ",INFO,self.datamodel)
+##        LOG("* editLFS * title ==> ",INFO,self.lfs_title)
+##        LOG("* editLFS * descrip ==>", INFO,self.lfs_description)
+##        LOG("* editLFS * basepath ==>", INFO,self.lfs_basepath)
         self.manage_changeProperties(title=title, description=description,\
-                                     basepath=basepath)
+                                    basepath=basepath)
         
-    #security.declareProtected(ModifyPortalContent, 'getIconPath')
+    security.declareProtected(ModifyPortalContent, 'getIconPath')
     def getIconPath(self, type):
         """ Return the icon registered fo a given type."""
         types_registry = MimeTypesRegistry()
         mimetypes = types_registry.lookup(type)
         for type in mimetypes:
             return type.icon_path
-        return atype
+       
 
-#InitializeClass(Folder) #sas
+InitializeClass(Folder)
 
-def addCPSLocalFS(container, id, REQUEST=None, **kw):
-       #, basepath, username=None, password=None, REQUEST=None):
-    """Add a local file system object to a folder
+def addCPSLocalFS(container, id, **kw):
+    """Add a CPS local file system object to a folder
   
     In addition to the standard Zope object-creation arguments,
     'id' and 'title', the following arguments are defined:
 
         basepath -- The base path of the local files.
-        username -- Username for a network share (win32 only).
-        password -- Password for a network share (win32 only).
     """
-    LOG("*addCPSLocalFS* --- appel a init",INFO,"")
+
     ob = CPSLocalFS(id, **kw)   
-    LOG("*addCPSLocalFS* REQUEST => ", INFO, REQUEST)
-    LOG("*addCPSLocalFS* kw => ", INFO, kw)
-    return CPSBase_adder(container, ob, REQUEST=REQUEST) #sas
+    return CPSBase_adder(container, ob) 
  
