@@ -7,7 +7,7 @@ from Products.CPSSchemas.BasicWidgets import renderHtmlTag
 from Products.LocalFS.LocalFS import LocalFS
 from Products.CPSLocalFS.CPSLocalFS import CPSLocalFS
 from os.path import exists, isdir
-from os import access, W_OK, listdir
+from os import access, W_OK, R_OK, listdir
 from zLOG import LOG, ERROR
 
 
@@ -53,7 +53,7 @@ class PathWidget(CPSStringWidget):
             return 0
         
         # Checks if the configuration file is accessible.
-        f_path = ZOPE_HOME + "/var/localfs_dirs.txt"
+        f_path = CLIENT_HOME + "/localfs_dirs.txt"
         if not exists(f_path):
             LOG("PathWidget: ", ERROR,
                 "missing localfs_dirs.txt configuration file")
@@ -64,19 +64,19 @@ class PathWidget(CPSStringWidget):
         # checks if the provided path has been authorized.
         f = open('localfs_dirs.txt')
         authorized = 0
-        while 1:
-            line = f.readline()[:-1]
+        for line in f.readlines():
             if line == "":
                 break
+            line = line[:-1]
+
             # allowing access to '/home/auser/content'
-            # must not allow access to '/home/auser/content1'
-       
+            # must not allow access to '/home/auser/content1'       
             if not line.startswith('#'):
                 if line[-1]!='/':
                     line+='/'
                 if path.startswith(line):
                     authorized = 1
-        f.close()
+                
         if not authorized:
             LOG("PathWidget: ", ERROR, "\n Provided path '" +path+ 
                "'is unauthorized, must match a prefix in var/localfs_dirs.txt")
@@ -99,7 +99,7 @@ class PathWidget(CPSStringWidget):
                 ok = 0
             else:
                 datamodel.set(field_id, path)
-                if not access(path, W_OK):
+                if not access(path, R_OK and W_OK):
                     LOG("PathWidget: ", ERROR, "Insufficient Rights")
                     datastructure.setError(widget_id, 
                         "psm_cpslocalfs_insufficients_rights_message")
