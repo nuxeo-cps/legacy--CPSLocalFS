@@ -6,7 +6,7 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
--
+- Allow blank lines in the localfs_dirs.txt conf file
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -

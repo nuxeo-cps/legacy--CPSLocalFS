@@ -76,7 +76,7 @@ class PathWidget(CPSStringWidget):
 
             # allowing access to '/home/auser/content'
             # must not allow access to '/home/auser/content1'       
-            if not line.startswith('#'):
+            if line and not line.startswith('#'):
                 if line[-1]!='/':
                     line+='/'
                 if path.startswith(line):
