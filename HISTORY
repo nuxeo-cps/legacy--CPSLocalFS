@@ -1,4 +1,20 @@
 *******************************************
+** CPSLocalFS V0.5.5 [R1 build 2004/05/05-09:28 by madarche]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- Allow blank lines in the localfs_dirs.txt conf file
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
 ** CPSLocalFS V0.5.4 [R1 build 2004/04/19-09:56 by sastier]
 
 Requires:
