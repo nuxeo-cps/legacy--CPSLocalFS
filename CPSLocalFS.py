@@ -61,7 +61,7 @@ class CPSLocalFS(Folder):
         self.setTitle(datamodel['Title'])
         # Warning : mother class LocalFS own a 'basepath'
         # attribut which must not be override
-        self.setPath(datamodel['Basepath'])
+        self.setPath(datamodel['lfsbasepath'])
         self.setDescription(datamodel['Description'])
         lfs = LocalFS(self.getTitle(), self.getPath(), None, None)
         self.setLocalFS(lfs)
