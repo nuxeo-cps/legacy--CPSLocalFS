@@ -71,7 +71,7 @@ class CPSLocalFS(LocalFS, BaseDocument):
                                     description = self.getDescription(),
                                     basepath = self.getPath())
 
-    security.declareProtected(ModifyPortalContent, 'isAccessible')
+    security.declareProtected(View, 'isAccessible')
     def isAccessible(self,path):
         """ Check if a path points to a file or directory and if it has
         read or exec access rights."""
