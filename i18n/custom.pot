@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: default\n"
-"POT-Creation-Date: 2004-04-02 16:45default\n"
+"POT-Creation-Date: 2004-04-15 17:42default\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Your Name <your@email>\n"
 "Language-Team: Name <email>\n"
@@ -35,5 +35,12 @@ msgstr ""
 msgid "portal_type_CPSLocalFS_description"
 msgstr ""
 
+msgid "psm_cpslocalfs_missing_config_file_message"
+msgstr ""
+
+msgid "psm_cpslocalfs_unauthorized_basepath_message"
+msgstr ""
+
 msgid "blank"
 msgstr ""
+
