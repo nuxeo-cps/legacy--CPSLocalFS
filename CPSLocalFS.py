@@ -12,7 +12,7 @@ from Products.CPSDefault.Folder import Folder
 from AccessControl import ClassSecurityInfo
 from Products.PortalTransforms.MimeTypesRegistry import MimeTypesRegistry
 from Globals import InitializeClass
-#from zLOG import LOG, DEBUG, INFO
+from zLOG import LOG, DEBUG
 
     
 factory_type_information = ({
@@ -33,7 +33,7 @@ factory_type_information = ({
                   'permissions': (View,)},
                   {'id': 'edit',
                    'name': 'action_modify',
-                   'action': 'cpslocalfs_edit_form',
+                   'action': 'cpsdocument_edit_form',
                    'permissions': (ModifyPortalContent,),},
                             
                 
@@ -56,6 +56,7 @@ class CPSLocalFS(Folder):
 
 
     def __init__(self, id, **kw):
+        LOG("CPSLocalFS: ", DEBUG, "init")
         Folder.__init__(self, id, **kw)
         datamodel = kw.get('datamodel')
         self.setTitle(datamodel['Title'])
@@ -64,6 +65,7 @@ class CPSLocalFS(Folder):
         self.setPath(datamodel['lfsbasepath'])
         self.setDescription(datamodel['Description'])
         lfs = LocalFS(self.getTitle(), self.getPath(), None, None)
+       # lfs = LocalFS("aTitleForCPSLocalFS","/home/sastier/tmp",None,None)
         self.setLocalFS(lfs)
 
 
@@ -86,14 +88,13 @@ class CPSLocalFS(Folder):
 
                 
     security.declareProtected(ModifyPortalContent, 'editProperties')
-    def editProperties(self, title, path, description):
+    def editProperties(self):
         """ Edit CPSLocalFS object properties."""
-        self.setPath(path)
-        self.setDescription(description)
-        self.setTitle(title)
+        LOG("EditProperties: ", DEBUG, "init")
         lfs = self.getLocalFS()
-        lfs.manage_changeProperties(title=title, description=description,\
-                                    basepath=path)
+        lfs.manage_changeProperties(title = self.getTitle(),\
+                                    description = self.getDescription(),\
+                                    basepath = self.getPath())
         
     security.declareProtected(ModifyPortalContent, 'getIconPath')
     def getIconPath(self, type):
@@ -102,6 +103,12 @@ class CPSLocalFS(Folder):
         mimetypes = types_registry.lookup(type)
         for type in mimetypes:
             return type.icon_path
+
+    security.declarePrivate('postCommitHook')
+    def postCommitHook(self, datamodel=None):
+        # this is called just after the dm commit
+        self.editProperties()
+      
 
 
     #
@@ -113,15 +120,16 @@ class CPSLocalFS(Folder):
         return self.localFS
 
     def setLocalFS(self, a_localFS):
+        LOG("SetLocalFS: ", DEBUG, "init")
         self.localFS = a_localFS
 
 
     #--
     def getPath(self):
-        return self.path
+        return self.lfsbasepath
 
     def setPath(self, a_path):
-        self.path = a_path
+        self.lfsbasepath= a_path
 
     #--
     def getDescription(self):
