@@ -25,8 +25,8 @@
       <th align="right" i18n:translate="label_description">Description</th>
       <td>
         <textarea cols="60" rows="8" name="description"
-         tal:content="here/Description|nothing"
-        ></textarea>
+         tal:content="here/description|nothing">
+        </textarea>
       </td>
     </tr>
     <tr>
