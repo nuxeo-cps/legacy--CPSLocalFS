@@ -1,6 +1,7 @@
 
 from Testing import ZopeTestCase
 from Products.CPSDefault.tests import CPSTestCase
+from Products.ExternalMethod.ExternalMethod import ExternalMethod
 
 ZopeTestCase.installProduct('CPSDocument')
 ZopeTestCase.installProduct('CPSSchemas')
