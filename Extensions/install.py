@@ -144,7 +144,7 @@ class ProductInstaller(CPSInstaller):
                 'Workspace', 'Portal', 'Calendar', 'Event')")
                 
     def testVersionLocalFS(self):
-        required_version ="LocalFS-1-2-andreas"
+        required_version =('LocalFS-1-2-andreas', 'LocalFS-1-3-andreas')
         version_path = str(ZOPE_HOME) + "/Products/LocalFS/version.txt"
 
         if not exists(version_path):
@@ -153,7 +153,7 @@ class ProductInstaller(CPSInstaller):
             version_file= open(version_path)
             installed_version = version_file.readline()
             version_file.close()
-            return required_version==installed_version
+            return installed_version in required_version
     
     def testReachConfigFile(self):
         config_file_path = str(ZOPE_HOME) +"/var/localfs_dirs.txt"
