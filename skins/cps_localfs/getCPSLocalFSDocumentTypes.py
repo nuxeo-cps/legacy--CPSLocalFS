@@ -5,7 +5,7 @@
 
 cpslocalfs_type = {
     'title': 'portal_type_CPSLocalFS_title',
-    'description': '',
+    'description': 'portal_type_CPSLocalFS_description',
     'content_icon': 'localfs_icon.gif',
     'content_meta_type': 'CPS Document',
     'product': 'CPSLocalFS',
