@@ -50,7 +50,7 @@
   <div tal:condition="not:creation|nothing"
     style="clear:both; text-align:right; border-top: solid 1px; margin-top: 2em;">
     <small>
-      <span metal:use-macro="here/content_lib/macros/byline">By Me</span>
+      <span metal:use-macro="here/cpslocalfs_content_lib/macros/byline">By Me</span>
     </small>
   </div>
 </metal:block>
@@ -190,7 +190,7 @@ format:</pre>
       <td align="left" valign="top">
        <tal:block define="no_form not:nothing;
          info python:here.getContentInfo(item, level=1);">
-      <!--   <metal:block use-macro="here/content_lib/macros/info_summary" /> -->
+         <metal:block use-macro="here/cpslocalfs_content_lib/macros/info_summary" /> 
         ICI ICI ICI ICI
          <br /><br />
        </tal:block>
@@ -204,7 +204,7 @@ format:</pre>
           tal:repeat="batch_items batches">
         <tal:block condition="batch_items">
           <metal:block
-            use-macro="here/content_lib/macros/display_contents_column" />
+            use-macro="here/cpslocalfs_content_lib/macros/display_contents_column" />
         </tal:block>
       </td>
     </tr>
@@ -263,7 +263,7 @@ format:</pre>
       </td>
       <td align="left" valign="top"
           tal:define="info python:here.getContentInfo(item, level=1)">
-          <metal:block use-macro="python:path('here/content_lib/macros/info_%s'%format)" /> 
+          <metal:block use-macro="python:path('here/cpslocalfs_content_lib/macros/info_%s'%format)" />
       </td>
     </tr>
   </table>
@@ -272,7 +272,7 @@ format:</pre>
     <tal:block define="info python:here.getContentInfo(item, level=1);
                        start repeat/item/start|nothing;
                        end repeat/item/end|nothing">
-       <metal:block use-macro="here/content_lib/macros/info_detail_tab" /> 
+     <metal:block use-macro="here/cpslocalfs_content_lib/macros/info_detail_tab" />
     </tal:block>
     </tal:block>
   <br />
@@ -289,7 +289,6 @@ format:</pre>
             tal:attributes="selected not:sort_by">
             No sort
     </option>
-
     <option i18n:translate="label_title_asc" value="title_asc"
             tal:attributes="selected
                               python:sort_by == 'title' and direction == 'asc'">
@@ -311,29 +310,7 @@ format:</pre>
                              python:sort_by == 'date' and direction == 'desc' ">
             Date descending
     </option>
-
-    <option i18n:translate="label_status_asc" value="status_asc"
-            tal:attributes="selected
-                             python:sort_by == 'status' and direction == 'asc'">
-            Status ascending
-    </option>
-    <option i18n:translate="label_status_desc" value="status_desc"
-            tal:attributes="selected
-                             python:sort_by == 'status' and direction =='desc'">
-            Status descending
-    </option>
-
-    <option i18n:translate="label_author_asc" value="author_asc"
-            tal:attributes="selected
-                             python:sort_by == 'author' and direction == 'asc'">
-            Author ascending
-    </option>
-    <option i18n:translate="label_author_desc" value="author_desc"
-            tal:attributes="selected
-                             python:sort_by == 'author' and direction =='desc'">
-            Author descending
-    </option>
-  </select>
+ </select>
 
   <span i18n:translate="label_display">Display with</span>
   <select name="display_style">
@@ -418,14 +395,17 @@ format:</pre>
   </div>
   <img tal:replace="structure python:here.getImgTag(info['icon'],
                                      base_url=base_url, title='%s, id:%s' % (info['type'], info['id']))" />
-   <a href="" tal:attributes="href string:${base_url}${info/rpath}/${action};">
+   
+  <a href="" tal:attributes="href string:${base_url}${info/rpath}/${action};">
+ 
    <b><span tal:replace="info/title_or_id">ID</span></b></a>
+    <br/>type :  <span tal:replace="info/type">type</span><br/>
   <br />
-  <a href="" tal:attributes="href string:${base_url}${info/rpath}/${action}">
+  <a href="" tal:attributes="href string:${base_url}${info/rpath}/${action}"> 
   <small>
     <tal:block define="status_short_fmt not:nothing;
                        status_time not:nothing;">
-      <metal:block use-macro="here/content_lib/macros/status" />
+      <metal:block use-macro="here/cpslocalfs_content_lib/macros/status" />
     </tal:block>
     <tal:block condition="info/size|nothing">, <span tal:replace="info/size">
       10 kB</span>
@@ -483,7 +463,7 @@ format:</pre>
  <small>
    <tal:block define="status_short_fmt not:nothing;
                       status_time not:nothing;">
-     <metal:block use-macro="here/content_lib/macros/status" />
+     <metal:block use-macro="here/cpslocalfs_content_lib/macros/status" />
    </tal:block>
  </small>
 </div>
@@ -511,7 +491,7 @@ format:</pre>
   <small style="float: right;">
     <tal:block define="status_short_fmt not:nothing;
                        status_time not:nothing;">
-      <metal:block use-macro="here/content_lib/macros/status" />
+      <metal:block use-macro="here/cpslocalfs_content_lib/macros/status" />
     </tal:block>
     <tal:block condition="info/size|nothing">, <span tal:replace="info/size">
       10 kB</span>
@@ -647,7 +627,7 @@ format:</pre>
     <tal:block define="info item;
                        status_time not:nothing;
                        status_short_fmt not:nothing;">
-      <metal:block use-macro="here/content_lib/macros/status" />
+      <metal:block use-macro="here/cpslocalfs_content_lib/macros/status" />
     </tal:block>
     <span i18n:translate="">label_in_section
       <a href="." tal:attributes="href string:${base_url}${item/rpath}/"

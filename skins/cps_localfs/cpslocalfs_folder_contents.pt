@@ -6,7 +6,7 @@
                         displayed python:request.get('displayed', ['']);
                        ">
 
-<metal:body use-macro="here/content_lib/macros/master">
+<metal:body use-macro="here/cpslocalfs_content_lib/macros/master">
 
 <metal:header metal:fill-slot="header">
   <tal:block condition="python:checkPerm('List folder contents', here, 'aq_parent')">
@@ -20,7 +20,6 @@
          Up ID</b></span></a>
   </tal:block>
 
-<h1> CPSLocalFS :</H1>
 <h1 tal:content="here/title_or_id">Page Title</h1>
 <a href="" accesskey="V"
    style="display:none"
@@ -31,7 +30,7 @@
 <div align="right">
   <form action="" method="post" name="formf"
         tal:attributes="action string:${here_url}/changeDisplayParams">
-    <metal:params use-macro="here/content_lib/macros/display_params_form" />
+    <metal:params use-macro="here/cpslocalfs_content_lib/macros/display_params_form" />
     <input type="submit" value="button_apply" class="standalone"
            i18n:attributes="value" />
   </form>
@@ -52,7 +51,8 @@
                     nav_action string:folder_contents;
                     items python:here.getFolderContents(displayed=displayed);">
 
-   <metal:block use-macro="here/content_lib/macros/display_contents" />
+
+   <metal:block use-macro="here/cpslocalfs_content_lib/macros/display_contents" />
 
    <table border="0" width="100%" cellspacing="0" cellpadding="2"
           tal:define="can_add python:checkPerm('Add portal content', here);
