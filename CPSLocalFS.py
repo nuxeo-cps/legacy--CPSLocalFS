@@ -33,7 +33,7 @@ factory_type_information = ({
                   'name': 'action_view',
                   'action': 'cpslocalfs_folder_contents',
                   'permissions': (View,)},
-                  {'id': 'modify',
+                  {'id': 'edit',
                    'name': 'action_modify',
                    'action': 'cpslocalfs_edit_form',
                    'permissions': (ModifyPortalContent,),},
@@ -63,11 +63,9 @@ class CPSLocalFS(LocalFS, BaseDocument):
         self.lfs_title = self.datamodel['Title']
         self.lfs_basepath = self.datamodel['Basepath']
         self.lfs_description = self.datamodel['Description']
-##        LOG("*__init__* datamodel ==> ",INFO,self.datamodel)
-##        LOG("*__init__* title ==> ",INFO,self.lfs_title)
-##        LOG("*__init__* descrip ==>", INFO,self.lfs_description)
-##        LOG("*__init__* basepath ==>", INFO,self.lfs_basepath)
         LocalFS.__init__(self, self.lfs_title, self.lfs_basepath, None, None)
+    
+            
     #    Folder.__init__(self, id, **kw)
 
      
@@ -82,6 +80,7 @@ class CPSLocalFS(LocalFS, BaseDocument):
         self.lfs_description = description
         self.lfs_title = title
         self.lfs_basepath = basepath
+
 ##        LOG("* editLFS * datamodel ==> ",INFO,self.datamodel)
 ##        LOG("* editLFS * title ==> ",INFO,self.lfs_title)
 ##        LOG("* editLFS * descrip ==>", INFO,self.lfs_description)
@@ -108,7 +107,6 @@ def addCPSLocalFS(container, id, **kw):
 
         basepath -- The base path of the local files.
     """
-
-    ob = CPSLocalFS(id, **kw)   
+    ob = CPSLocalFS(id, **kw)
     return CPSBase_adder(container, ob) 
  
