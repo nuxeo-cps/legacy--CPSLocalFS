@@ -1,6 +1,6 @@
 #################################
 # This file is intended to be placed in your Zope instance
-# ZOPE_HOME/var folder. It features a list of the files you
+# CLIENT_HOME folder. It features a list of the files you
 # want to allow access through CPSLocalFS.
 # The Zope process needs to have read and write access on
 # those files. Hence, if a file does not have sufficients
@@ -12,5 +12,4 @@
 # previous CPSLocalFS instancied with this path.
 ################################
 /tmp/
-#/home/sastier/cpslocalfs/demo/
 /home/zopes/
