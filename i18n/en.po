@@ -1,14 +1,16 @@
 # translation of en.po to 
 # translation of en.po to
+# translation of en.po to
 # Gettext Message File for default.
 # Your Name <your@email>, Year
+# sastier, 2004.
 # sastier, 2004.
 # sastier, 2004.
 msgid ""
 msgstr ""
 "Project-Id-Version: en\n"
-"POT-Creation-Date: 2004-04-15 18:09default\n"
-"PO-Revision-Date: 2004-04-15 18:13+0200\n"
+"POT-Creation-Date: 2004-04-16 09:11default\n"
+"PO-Revision-Date: 2004-04-16 09:12+0200\n"
 "Last-Translator: sastier\n"
 "Language-Team:  <C@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -46,6 +48,9 @@ msgstr "Size"
 #: from ../skins/cps_localfs/cpslocalfs_folder_contents.pt
 msgid "file_type"
 msgstr "Type"
+
+msgid "label_basepath"
+msgstr "Path"
 
 msgid "psm_cpslocalfs_unknown_basepath_message"
 msgstr "Unknown basepath."

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: default\n"
-"POT-Creation-Date: 2004-04-15 18:09default\n"
+"POT-Creation-Date: 2004-04-16 09:11default\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Your Name <your@email>\n"
 "Language-Team: Name <email>\n"
@@ -43,6 +43,9 @@ msgstr ""
 #.   <span>Type</span>
 #: from ../skins/cps_localfs/cpslocalfs_folder_contents.pt
 msgid "file_type"
+msgstr ""
+
+msgid "label_basepath"
 msgstr ""
 
 msgid "psm_cpslocalfs_unknown_basepath_message"

@@ -16,6 +16,8 @@ msgstr ""
 "Preferred-encodings: utf-8 latin1\n"
 "Domain: default\n"
 
+msgid "label_basepath"
+msgstr ""
 
 msgid "psm_cpslocalfs_unknown_basepath_message"
 msgstr ""
