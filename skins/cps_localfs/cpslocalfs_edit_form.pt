@@ -1,0 +1,42 @@
+
+<html metal:use-macro="here/main_template/macros/master"
+      i18n:domain="cpslocalfs">
+
+<metal:block fill-slot="header" />
+
+<metal:block fill-slot="main">
+<form action="cpslocalfs_edit" method="post">
+  <table>
+  <tr>
+    <th align="right" i18n:translate="label_title">Title</th>
+      <td>
+        <input type="text" name="title"
+               tal:attributes="value here/title|nothing" />
+      </td>
+    </tr>
+    <tr>
+      <th align="right" i18n:translate="label_basepath">Host</th>
+      <td>
+        <input type="text" name="basepath"
+               tal:attributes="value here/basepath|nothing" />
+      </td>
+    </tr>
+    <tr>
+      <th align="right" i18n:translate="label_description">Description</th>
+      <td>
+        <textarea cols="60" rows="8" name="description"
+         tal:content="here/Description|nothing"
+        ></textarea>
+      </td>
+    </tr>
+    <tr>
+      <th></th>
+      <td>
+        <input type="submit" value="button_change"
+               i18n:attributes="value" />
+      </td>
+    </tr>
+  </table>
+</form>
+</metal:block>
+</html>
