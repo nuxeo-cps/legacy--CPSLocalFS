@@ -6,5 +6,6 @@ check:
 clean:
 	find . -name '*~' | xargs rm -f
 	find . -name '*pyc' | xargs rm -f
-	#cd tests ; make clean
+
+#cd tests ; make clean
 
