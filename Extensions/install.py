@@ -81,7 +81,7 @@ class ProductInstaller(CPSInstaller):
         # Portal Workflow.
         self.allowContentTypes('CPSLocalFS', ('Workspace', 'Section'))
         ws_chains = {'CPSLocalFS': 'workspace_folder_wf',}
-        se_chains = {'CPSLocalFS': 'workspace_folder_wf',}
+        se_chains = {'CPSLocalFS': 'section_folder_wf',}
         self.verifyLocalWorkflowChains(self.portal['workspaces'],
                                         ws_chains)
         self.verifyLocalWorkflowChains(self.portal['sections'],
