@@ -40,6 +40,11 @@ class PathWidget(CPSStringWidget):
         field_id = self.fields[0]
         path = datastructure.get(widget_id, '')
 
+        if path=="":
+            datastructure.setError(widget_id, 
+                "psm_cpslocalfs_invalid_basepath_message")
+            return 0
+
         # provide path : '/home/monrep' must match
         # the line '/home/monrep/' in the config file,
         # so we add an extra '/' to path if needed.
