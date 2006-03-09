@@ -1,0 +1,75 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: CPSLocalFS\n"
+"POT-Creation-Date: 2004-04-16 09:11default\n"
+"PO-Revision-Date: 2006-03-05 13:44+0100\n"
+"Last-Translator: Jesús Martín <jesusmartin@lasalle.es>\n"
+"Language-Team: español <jesusmartin@lasalle.es>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-15\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Preferred-encodings: latin9 utf-8\n"
+"Domain: default\n"
+"Language-Code: es\n"
+"Language-Name: Spanish\n"
+"X-Generator: KBabel 1.0.2\n"
+"X-Poedit-Language: Spanish\n"
+"X-Poedit-Country: SPAIN\n"
+
+#.   <span>description_up_to
+#.         ${up_id (tal content="parent_title")}</span>
+#: from ../skins/cps_localfs/cpslocalfs_folder_contents.pt
+msgid "description_up_to ${up_id}"
+msgstr "Subir ${up_id}"
+
+#.   <span>Last Modified</span>
+#: from ../skins/cps_localfs/cpslocalfs_folder_contents.pt
+msgid "file_last_modified"
+msgstr "Última modificación"
+
+#.   <span>Name</span>
+#: from ../skins/cps_localfs/cpslocalfs_folder_contents.pt
+msgid "file_name"
+msgstr "Nombre"
+
+#.   <span>Size</span>
+#: from ../skins/cps_localfs/cpslocalfs_folder_contents.pt
+msgid "file_size"
+msgstr "Tamaño"
+
+#.   <span>Type</span>
+#: from ../skins/cps_localfs/cpslocalfs_folder_contents.pt
+msgid "file_type"
+msgstr "Tipo"
+
+msgid "label_basepath"
+msgstr "Ruta"
+
+msgid "psm_cpslocalfs_unknown_basepath_message"
+msgstr "Ruta desconocida"
+
+msgid "psm_cpslocalfs_insufficients_rights_message"
+msgstr "Permisos insuficientes en la ruta"
+
+msgid "psm_cpslocalfs_invalid_content_in_folder_message"
+msgstr "Campos inválidos en la carpeta."
+
+msgid "psm_cpslocalfs_invalid_basepath_message"
+msgstr "Ruta inválida"
+
+msgid "portal_type_CPSLocalFS_title"
+msgstr "Carpeta en el servidor"
+
+msgid "portal_type_CPSLocalFS_description"
+msgstr "Ver el contenido de una carpeta"
+
+msgid "psm_cpslocalfs_missing_config_file_message"
+msgstr "No se encuentra el archivo de configuration \"localfs_dirs.txt\"."
+
+msgid "psm_cpslocalfs_unauthorized_basepath_message"
+msgstr "El acceso al directorio no está autorizado"
+
+msgid "blank"
+msgstr ""
+
